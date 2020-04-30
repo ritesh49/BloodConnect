@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css"; */
+@import 'angular-notifier/styles/core.css';
+@import 'angular-notifier/styles/themes/theme-material.css';
+
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Poppins-Regular;
+  src: url('assets/fonts/poppins/Poppins-Regular.ttf') format("truetype"); 
+}
+
+@font-face {
+  font-family: Poppins-Bold;
+  src: url('assets/fonts/poppins/Poppins-Bold.ttf') format("truetype"); 
+}
+
+@font-face {
+  font-family: Poppins-Medium;
+  src: url('assets/fonts/poppins/Poppins-Medium.ttf') format("truetype"); 
+}
+
+@font-face {
+  font-family: Montserrat-Bold;
+  src: url('assets/fonts/montserrat/Montserrat-Bold.ttf') format("truetype"); 
+}
