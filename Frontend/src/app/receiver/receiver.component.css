@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,400italic");
+@import url("//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+body {
+    padding: 60px 0px;
+    background-color: rgb(220, 220, 220);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /* overflow-y: scroll; */
+}
+
+.container {
+    height: 900px;
+    margin-top: 10px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch
+}
+
+.kt-widget__head {
+    font-weight: bold;
+    font-size: medium;
+    color: #525050;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
+}
+
+.kt-widget.kt-widget--user-profile-3 .kt-widget__bottom .kt-widget__item .kt-widget__icon i {
+    font-size: 2.7rem;
+    color: #a2a5b9;
+    font-weight: 400;
+}
+
+.div {
+    width: 100%;
+}
+
+.kt-widget__media {
+    width: 10%;
+    float: left;
+    padding: 8px 8px;
+}
+
+.kt-widget__media>img {
+    border-radius: 50%;
+    width: 30px;
+    /* height: 30px; */
+}
+
+.kt-widget__content {
+    width: 50%;
+    display: inline-block;
+    padding: 8px 8px;
+}
+
+.kt-widget__progress {
+    width: 40%;
+    display: inline-block;
+    margin-top: 0px;
+}
+
+.kt-portlet__body {
+    margin-bottom: 10px;
+    background-color: aliceblue;
+    padding: 8px 8px;
+    /* color: #222222; */
+    border-radius: 5px;
+}
+
+.kt-widget__icon {
+    text-align: center;
+    /* float: right; */
+    /* width: fit-content; */
+}
+
+.kt-widget__details {
+    /* align-items: center; */
+    display: inline-block;
+}
+
+.kt-widget__item {
+    /* width: 16%; */
+    display: inline-block;
+    margin-left: 20px;
+    padding: 8px 8px;
+    text-align: center;
+}
+
+a {
+    color: #222222;
+}
+
+  
+  .chart-container {
+    position: relative;
+    margin: 0px;
+    /* float: right; */
+    
+    height:300px;
+     /* 162px; */
+    width: 562px;
+    /* 327px; */
+  }
+  .kt-widget__progress A{
+    text-decoration: none;
+
+
+  }
+  .btn-submit-LM {
+     display: block; 
+    padding: 12px;
+    color: #fff;
+    border: 0; 
+    margin:0px;
+    background-color: #028fcc;
+    margin-top: 20px;
+  }
+  .back{
+      width:200px;
+      margin-top: 100px;
+      margin-left: 5px;
+      text-align: center;
+      cursor: pointer;
+  }
