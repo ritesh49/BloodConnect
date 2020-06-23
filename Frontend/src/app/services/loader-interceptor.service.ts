@@ -4,6 +4,7 @@ import { Observable, pipe } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToasterComponent } from '../toaster/toaster.component';
+import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { ToasterComponent } from '../toaster/toaster.component';
 export class LoaderInterceptorService implements HttpInterceptor {
   constructor(
     private spinner : NgxSpinnerService,
+    private common:CommonService,
     private toaster:ToasterComponent) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
@@ -25,15 +27,10 @@ export class LoaderInterceptorService implements HttpInterceptor {
       if (event instanceof HttpResponse) {
         this.spinner.hide();
       }
-    },err => this.spinner.hide()));
-  }
-  // private onEnd(): void {
-  //   this.hideLoader();
-  // }
-  // private showLoader(): void {
-  //   this.loaderService.show();
-  // }
-  // private hideLoader(): void {
-  //   this.loaderService.hide();
-  // }
+    },err => {
+      if(err.status == 401)
+        this.common.refreshToken();
+      this.spinner.hide()
+    }));
+  }  
 }

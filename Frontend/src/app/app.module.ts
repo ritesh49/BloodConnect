@@ -5,70 +5,77 @@ import { MaterialModule } from './material.module';
 import { AngularTiltModule } from 'angular-tilt';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {AvatarModule } from 'ngx-avatar';
+import { AvatarModule } from 'ngx-avatar';
 import { NotifierModule, NotifierOptions } from "angular-notifier";
+import { CountUpModule } from 'countup.js-angular2';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { SliderModule } from 'angular-image-slider';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DonorComponent } from './donor/donor.component';
 import { LoginComponent } from './login/login.component';
-import { ReceiverComponent } from './receiver/receiver.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClient,HTTP_INTERCEPTORS , HttpHandler, HttpClientModule } from '@angular/common/http';
 import { LoaderInterceptorService } from './services/loader-interceptor.service';
 import { ToasterComponent } from './toaster/toaster.component';
-import { HomePageComponent } from './home-page/home-page.component';
+import { UiTestingComponent } from './ui-testing/ui-testing.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { DrComponent } from './dr/dr.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
     horizontal: {
-      position: 'right',
-      distance: 2
+      position: "right",
+      distance: 12,
     },
     vertical: {
-      position: 'top',
-      distance: 2,
-      gap: 0
-    }
-  },
-  theme: 'material',
+      position: "top",
+      distance: 82,
+      gap: 10,
+    },
+  },  
   behaviour: {
     autoHide: 8000,
     onClick: false,
-    onMouseover: 'pauseAutoHide',
+    onMouseover: "pauseAutoHide",
     showDismissButton: true,
-    stacking: 3
+    stacking: 3,
   },
   animations: {
     enabled: true,
     show: {
-      preset: 'slide',
+      preset: "slide",
       speed: 300,
-      easing: 'ease'
+      easing: "ease",
     },
     hide: {
-      preset: 'fade',
+      preset: "fade",
       speed: 300,
-      easing: 'ease',
-      offset: 50
+      easing: "ease",
+      offset: 50,
     },
     shift: {
       speed: 300,
-      easing: 'ease'
+      easing: "ease",
     },
-    overlap: 150
-  }
+    overlap: 150,
+  },
 };
 
 @NgModule({
   declarations: [
     AppComponent,
-    DonorComponent,
     LoginComponent,
-    ReceiverComponent,
     RegisterComponent,
     ToasterComponent,
-    HomePageComponent
+    UiTestingComponent,
+    HomeComponent,
+    AboutComponent,
+    NavBarComponent,
+    DrComponent
   ],
   imports: [
     BrowserModule,
@@ -76,12 +83,16 @@ const customNotifierOptions: NotifierOptions = {
     ReactiveFormsModule,
     FormsModule,
     MaterialModule,
+    CountUpModule,
     AngularTiltModule,
+    CarouselModule,
     NotifierModule.withConfig(customNotifierOptions),
     HttpClientModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
-    AvatarModule
+    AvatarModule,
+    SliderModule,
+    NgbModule
   ],
   providers: [
     {

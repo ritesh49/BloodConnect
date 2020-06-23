@@ -1,0 +1,16 @@
+.wrap
+    {
+        padding-top: 30px;
+    }
+
+    .glyphicon
+    {
+        margin-bottom: 10px;
+        margin-right: 10px;
+    }
+
+    small
+    {
+        display: block;
+        color: #888;
+    }

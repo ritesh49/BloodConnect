@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-/* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css"; */
-@import 'angular-notifier/styles/core.css';
-@import 'angular-notifier/styles/themes/theme-material.css';
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import 'angular-notifier/styles';
+/* @import "~bootstrap/dist/css/bootstrap.css"; */
+/* @import 'angular-notifier/styles/themes/theme-material.css'; */
 
 * {
   box-sizing: border-box;
@@ -9,7 +10,7 @@
 
 @font-face {
   font-family: Poppins-Regular;
-  src: url('assets/fonts/poppins/Poppins-Regular.ttf') format("truetype"); 
+  src: url('assets/fonts/poppins/Poppins-Regular.ttf') format("truetype");
 }
 
 @font-face {
