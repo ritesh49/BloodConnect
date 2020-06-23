@@ -1,68 +1,75 @@
 <body>
+<app-nav-bar></app-nav-bar>
 <div class="container">
     <div class="form-horizontal form-group" role="form">
         <h2>Registration</h2>
         <div class="form-group">
             <label for="firstName" class="col-sm-4 control-label">First Name</label>
             <div class="col-sm-9">
-                <input [(ngModel)]="firstName" type="text" id="firstName" placeholder="First Name" class="form-control" autofocus>
+                <input [(ngModel)]="registerInfo.first_name" type="text" id="firstName" placeholder="First Name" class="form-control" autofocus>
             </div>
         </div>
         <div class="form-group">
             <label for="lastName" class="col-sm-4 control-label">Last Name</label>
             <div class="col-sm-9">
-                <input [(ngModel)]="lastName" type="text" id="lastName" placeholder="Last Name" class="form-control" autofocus>
+                <input [(ngModel)]="registerInfo.last_name" type="text" id="lastName" placeholder="Last Name" class="form-control" autofocus>
             </div>
         </div>
         <div class="form-group">
             <label for="email" class="col-sm-4 control-label">Email* </label>
             <div class="col-sm-9">
-                <input [(ngModel)]="email" type="email" id="email" placeholder="Email" class="form-control" name="email">
+                <input [(ngModel)]="registerInfo.email" type="email" id="email" placeholder="Email" class="form-control" name="email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="username" class="col-sm-4 control-label">Username* </label>
+            <div class="col-sm-9">
+                <input [(ngModel)]="registerInfo.username" type="text" id="username" placeholder="Username" class="form-control" name="username">
             </div>
         </div>
         <div class="form-group">
             <label for="password" class="col-sm-4 control-label">Password*</label>
             <div class="col-sm-9">
-                <input [(ngModel)]="FirstPassword" type="password" id="password" placeholder="Password" class="form-control">
+                <input [(ngModel)]="password" type="password" id="password" placeholder="Password" class="form-control">
             </div>
         </div>
         <div class="form-group">
             <label for="password" class="col-sm-4 control-label">Confirm Password*</label>
             <div class="col-sm-9">
-                <input [(ngModel)]="SecPassword" type="password" id="password" placeholder="Password" class="form-control">
+                <input [(ngModel)]="secPassword" type="password" id="secPassword" placeholder="Password" class="form-control">
             </div>
         </div>
         <div class="form-group">
             <label for="birthDate" class="col-sm-4 control-label">Date of Birth*</label>
             <div class="col-sm-9">
-                <input [(ngModel)]="birthDate" type="date" id="birthDate" class="form-control">
+                <input [(ngModel)]="registerInfo.birth_date" type="date" id="birthDate" class="form-control">
             </div>
         </div>
         <div class="form-group">
             <label for="phoneNumber" class="col-sm-4 control-label">Phone number </label>
             <div class="col-sm-9">
-                <input [(ngModel)]="phoneNumber" type="phoneNumber" id="phoneNumber" placeholder="Phone number" class="form-control">
+                <input [(ngModel)]="registerInfo.phone_no" type="phoneNumber" id="phoneNumber" placeholder="Phone number" class="form-control">
                 <span class="help-block">Your phone number won't be disclosed anywhere </span>
             </div>
         </div>
         <div class="form-group">
             <label for="BloodGroup" class="col-sm-4 control-label">Blood Group* </label>
             <div class="col-sm-9">
-                <input [(ngModel)]="blood" type="text" id="BloodGroup" placeholder="Please Write your Blood Group"
+                <input [(ngModel)]="registerInfo.bloodGroup" type="text" id="BloodGroup" placeholder="Please Write your Blood Group"
                     class="form-control">
             </div>
         </div>
         <div class="form-group">
             <label for="Height" class="col-sm-4 control-label">Height* </label>
             <div class="col-sm-9">
-                <input [(ngModel)]="height" type="number" id="height" placeholder="Please write your height in centimetres"
+                <input [(ngModel)]="registerInfo.height" type="number" id="height" placeholder="Please write your height in centimetres"
                     class="form-control">
             </div>
         </div>        
         <div class="form-group">
             <label for="weight" class="col-sm-4 control-label">Weight* </label>
             <div class="col-sm-9">
-                <input [(ngModel)]="weight" type="number" id="weight" placeholder="Please write your weight in kilograms"
+                <input [(ngModel)]="registerInfo.weight" type="number" id="weight" placeholder="Please write your weight in kilograms"
                     class="form-control">
             </div>
         </div>
@@ -72,12 +79,12 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <label class="radio-inline">
-                            <input [(ngModel)]="gender" type="radio" name="gender" id="femaleRadio" value="Female">Female
+                            <input [(ngModel)]="registerInfo.gender" type="radio" name="gender" id="femaleRadio" value="Female">Female
                         </label>
                     </div>
                     <div class="col-sm-4">
                         <label class="radio-inline">
-                            <input [(ngModel)]="gender" type="radio" name="gender" id="maleRadio" value="Male">Male
+                            <input [(ngModel)]="registerInfo.gender" type="radio" name="gender" id="maleRadio" value="Male">Male
                         </label>
                     </div>
                 </div>
@@ -89,18 +96,18 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <label class="radio-inline">
-                            <input [(ngModel)]="bloodDR" type="radio" name="blood" id="DonorType" value="Donor">Donor
+                            <input [(ngModel)]="registerInfo.blood_dr" type="radio" name="blood" id="DonorType" value="Donor">Donor
                         </label>
                     </div>
                     <div class="col-sm-4">
                         <label class="radio-inline">
-                            <input [(ngModel)]="bloodDR" type="radio" name="blood" id="ReceiverType" value="Receiver">Receiver
+                            <input [(ngModel)]="registerInfo.blood_dr" type="radio" name="blood" id="ReceiverType" value="Receiver">Receiver
                         </label>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label class="control-label col-sm-4">Do u have Any Medications or any Family Disease Trait?</label>
             <div class="col-sm-6">
                 <div class="row">
@@ -116,11 +123,11 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div *ngIf="medication == 'YES'" class="form-group">
-            <label for="oldMeds" class="col-sm-4 control-label">List Them Here</label>
+        </div> -->
+        <div>
+            <label for="oldMeds" class="col-sm-4 control-label">List Them Here*</label>
             <div class="col-sm-9">
-                <textarea [(ngModel)]="oldMeds" type="text" id="weight" placeholder="Enter Your Medications or any Old Disease Traits"
+                <textarea [(ngModel)]="registerInfo.medications" type="text" id="weight" placeholder="Enter Your Medications or any Old Disease Traits(If None then leave this column empty)"
                     class="form-control"></textarea>
             </div>
         </div>

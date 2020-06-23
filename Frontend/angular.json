@@ -28,13 +28,27 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",              
               "./node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/animate.css/animate.min.css",
-              "node_modules/hamburgers/dist/hamburgers.min.css"              
+              "./node_modules/hamburgers/dist/hamburgers.min.css",
+              "./node_modules/boxicons/css/boxicons.min.css",
+              "./node_modules/venobox/venobox/venobox.css",
+              "./node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
+              "./node_modules/aos/dist/aos.css",
+              "./node_modules/remixicon/fonts/remixicon.css",
+              "./node_modules/animate.css/animate.min.css"              
             ],
             "scripts": [
               "node_modules/vanilla-tilt/dist/vanilla-tilt.js",
               "./node_modules/popper.js/dist/umd/popper.min.js", 
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js" 
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "./node_modules/jquery.easing/jquery.easing.min.js",
+              "./node_modules/jquery-sticky/jquery.sticky.js",
+              "./node_modules/isotope-layout/dist/isotope.pkgd.min.js",
+              "./node_modules/venobox/venobox/venobox.min.js",
+              "./node_modules/waypoints/lib/jquery.waypoints.min.js",
+              "./node_modules/owl.carousel/dist/owl.carousel.min.js",
+              "./node_modules/aos/dist/aos.js",
+              "./node_modules/jquery/dist/jquery.min.js"              
             ]
           },
           "configurations": {

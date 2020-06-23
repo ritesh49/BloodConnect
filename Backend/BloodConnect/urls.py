@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path,include,re_path
+from django.conf.urls import url
 from rest_framework_simplejwt import views as jwt_views
 from bloodapp.views import index,redirectView
 
@@ -10,4 +11,5 @@ urlpatterns = [
     path('api/token/refresh', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('api/',include('bloodapp.urls')),
     path('admin/', admin.site.urls),
+    re_path(r'$',index),
 ]

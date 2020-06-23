@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
 
   username = '';
   password = '';
+  token;
   constructor(
   private authorization : AuthorizeService,
   private toaster:ToasterComponent,
@@ -32,20 +33,32 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser(){ 
-    this.username = this.username.split('@')[0];
+    this.username = this.username;
     this.authorization.validateUser(this.username,this.password)
-    .subscribe(loginInfo => {
-      localStorage.setItem('UserDetails',JSON.stringify(loginInfo));
-      this.common.loggedUser = loginInfo;
-      if(loginInfo.blood_dr == 'donor')
-        this.router.navigate(['donor']);
-      else if(loginInfo.blood_dr == 'receiver')
-        this.router.navigate(['receiver'])
+    .subscribe(tokenInfo => {      
+      console.log(this.common.authToken);
+      this.common.authToken.access = '';
+      this.common.authToken.refresh = '';
+      this.token = tokenInfo
+      console.log(this.token);
+      localStorage.setItem("TokenInfo",JSON.stringify(this.token));
+      // debugger;
+      this.common.authToken=this.token;
     },
     err => {
       this.toaster.showError(err.error['detail']);
     },
-    () => console.log('Login completed'));
+    () => {
+      this.common.getUserData(this.username,this.token)
+      .subscribe(loginInfo => {
+        localStorage.setItem('UserData',JSON.stringify(loginInfo[0]));
+        this.common.loggedUser = loginInfo[0];
+        if(loginInfo[0].blood_dr == 'donor')
+          this.router.navigate(['blood/donor']);
+        else if(loginInfo[0].blood_dr == 'receiver')
+          this.router.navigate(['blood/receiver'])
+      })
+    });
   }
 }
 
