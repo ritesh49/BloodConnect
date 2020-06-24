@@ -23,15 +23,7 @@ export class DrComponent implements OnInit {
     .subscribe(data => {
       console.log(data);
       this.dr_data = data;
-    },err => {
-      console.log(err.status)
-      if(err.status == 401)
-      {
-        console.log('Executed');
-        this.common.loadData(this.dr_info)
-        .subscribe(data => this.dr_data = data)
-      }   
-    })
+    },err => console.log(err.status))
   }
 
   chatUser() {

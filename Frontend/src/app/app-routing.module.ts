@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { UiTestingComponent } from './ui-testing/ui-testing.component';
 import { HomeComponent } from './home/home.component';
 import { DrComponent } from './dr/dr.component';
+import { DjangoChatComponent } from './django-chat/django-chat.component';
 
 
 const routes: Routes = [  
@@ -12,8 +13,9 @@ const routes: Routes = [
   {path:'blood/:name',component:DrComponent},
   {path:'register',component:RegisterComponent},  
   {path:'home',component:HomeComponent},
+  {path:'chat/:room_name',component:DjangoChatComponent},
   {path:'uiTest',component:UiTestingComponent},
-  { path:'**',component:LoginComponent}
+  { path:'**',component:HomeComponent}
 ];
 
 @NgModule({

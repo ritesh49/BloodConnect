@@ -29,7 +29,10 @@ export class LoaderInterceptorService implements HttpInterceptor {
       }
     },err => {
       if(err.status == 401)
-        this.common.refreshToken();
+        {
+          this.common.refreshToken();
+          setTimeout(() => window.location.reload(),0)
+        }
       this.spinner.hide()
     }));
   }  
