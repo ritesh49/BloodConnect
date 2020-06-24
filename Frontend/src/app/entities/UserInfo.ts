@@ -1,5 +1,6 @@
 export class UserInfo
 {
+    profile_image:any;   // any because while getting data only URL is getted, and while submitting FormData type is needed
     email:string;
     username:string; 
     blood_dr:string;

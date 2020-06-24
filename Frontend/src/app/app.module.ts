@@ -24,6 +24,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { DrComponent } from './dr/dr.component';
+import { DjangoChatComponent } from './django-chat/django-chat.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -75,7 +76,8 @@ const customNotifierOptions: NotifierOptions = {
     HomeComponent,
     AboutComponent,
     NavBarComponent,
-    DrComponent
+    DrComponent,
+    DjangoChatComponent
   ],
   imports: [
     BrowserModule,

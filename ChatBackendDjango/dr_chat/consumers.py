@@ -25,7 +25,7 @@ class DRChatConsumer(WebsocketConsumer):
     # Receive Message From Web Socket
     def receive(self,text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        message = text_data_json
 
         # Send Message to WebSocket
         # self.send(text_data=json.dumps({            

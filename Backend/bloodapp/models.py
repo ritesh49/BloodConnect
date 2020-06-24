@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 
 
 class UserInfoModel(models.Model):
+    image_width = models.PositiveIntegerField(default=300);
+    image_height = models.PositiveIntegerField(default=300);
+    profile_image = models.ImageField(upload_to='profile_photo',blank=True , width_field='image_width', height_field='image_height', default='profile_image.jpg', max_length=100)
     email = models.EmailField(default='')
     username = models.CharField(default='', max_length=50)
     blood_dr = models.CharField(default='', max_length=10)
