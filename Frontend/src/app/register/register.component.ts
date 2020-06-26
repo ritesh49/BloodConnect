@@ -5,11 +5,13 @@ import { SignUp } from '../entities/SignUp';
 import { UserInfo } from '../entities/UserInfo';
 import { Router } from '@angular/router';
 import { CommonService } from '../services/common.service';
+import { FileService } from '../services/file.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
+  providers: [FileService]
 })
 export class RegisterComponent implements OnInit {
   public registerInfo = new UserInfo();  
@@ -70,10 +72,10 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-checkProperties(obj,exceptions:string[],mainObj:object) {
+checkProperties(obj,exceptions:string[],properties:string[]) {
     debugger;
-    for (var key in obj) {        
-        if (!exceptions.includes(key) && obj[key] === null || obj[key] == "")
+    for (var key in properties) {
+        if (!exceptions.includes(key) && (obj[key] || obj[key] == ""))
             return false;
     }
     return true;
@@ -94,7 +96,8 @@ checkProperties(obj,exceptions:string[],mainObj:object) {
   }
 
   registerUser() {
-    if (this.checkProperties(this.registerInfo,['profile_image'],new UserInfo())) {
+    if (Object.keys(this.registerInfo).length == 12) {
+      debugger
       let regObj = new SignUp();
       regObj.email = this.registerInfo.email;
       regObj.first_name = this.registerInfo.first_name;
@@ -115,7 +118,7 @@ checkProperties(obj,exceptions:string[],mainObj:object) {
             for (let j = 0; j < err.error[field].length; j++) {
               if (field == 'username') {
                 this.toaster.showWarning(
-                  'Account Already Registered , Try login/PWD'
+                  `Account Already Registered with ${this.registerInfo.username} Username , Try login`
                 );
                 this.router.navigate(['login']);
               } else this.toaster.showError(field + ':-' + err.error[field][j]);

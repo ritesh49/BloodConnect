@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from .models import UserInfoModel,DonorReceiverModel
+from .models import UserInfoModel,ChatMessage
 from django.contrib.auth.models import User
 
-class DonateReceiveSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=DonorReceiverModel
-        fields='__all__'
+# class DonateReceiveSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model=DonorReceiverModel
+#         fields='__all__'
 
 class SignUpSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,4 +24,9 @@ class SignUpSerializer(serializers.ModelSerializer):
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInfoModel
+        fields = '__all__'
+
+class ChatMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatMessage
         fields = '__all__'

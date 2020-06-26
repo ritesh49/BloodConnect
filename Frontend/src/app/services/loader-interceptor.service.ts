@@ -1,5 +1,11 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -7,33 +13,42 @@ import { ToasterComponent } from '../toaster/toaster.component';
 import { CommonService } from './common.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoaderInterceptorService implements HttpInterceptor {
   constructor(
-    private spinner : NgxSpinnerService,
-    private common:CommonService,
-    private toaster:ToasterComponent) { }
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    
+    private spinner: NgxSpinnerService,
+    private common: CommonService,
+    private toaster: ToasterComponent
+  ) {}
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     this.spinner.show();
-    return next.handle(
-      req.clone({
-        setHeaders: {        
-          'Content-Type':'application/json'
-        }
-    })
-      ).pipe(tap((event: HttpEvent<any>) => { 
-      if (event instanceof HttpResponse) {
-        this.spinner.hide();
-      }
-    },err => {
-      if(err.status == 401)
-        {
-          this.common.refreshToken();
-          setTimeout(() => window.location.reload(),0)
-        }
-      this.spinner.hide()
-    }));
-  }  
+    return next
+      .handle(
+        req.clone({
+          setHeaders: {
+            
+          },
+        })
+      )
+      .pipe(
+        tap(
+          (event: HttpEvent<any>) => {
+            if (event instanceof HttpResponse) {
+              this.spinner.hide();
+            }
+          },
+          (err) => {
+            this.spinner.hide();            
+            if (err.status == 401) {
+              this.common.refreshToken();
+              this.toaster.showInfo("Reload The page , This Bug will be resolved in later versions");
+            }            
+          }
+        )
+      );
+  }
 }

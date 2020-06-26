@@ -3,6 +3,7 @@ import { AuthorizeService } from '../services/authorize.service';
 import { ToasterComponent } from '../toaster/toaster.component';
 import { Router } from '@angular/router';
 import { CommonService } from '../services/common.service';
+import { debugOutputAstAsTypeScript } from '@angular/compiler';
 
 @Component({
   selector: 'app-login',
@@ -36,16 +37,14 @@ export class LoginComponent implements OnInit {
     this.username = this.username;
     this.authorization.validateUser(this.username,this.password)
     .subscribe(tokenInfo => {      
-      console.log(this.common.authToken);
       this.common.authToken.access = '';
       this.common.authToken.refresh = '';
-      this.token = tokenInfo
-      console.log(this.token);
+      this.token = tokenInfo      
       localStorage.setItem("TokenInfo",JSON.stringify(this.token));
       // debugger;
       this.common.authToken=this.token;
     },
-    err => {
+    err => {      
       this.toaster.showError(err.error['detail']);
     },
     () => {

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { UserInfo } from '../entities/UserInfo';
 import { CommonService } from '../services/common.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dr',
@@ -11,7 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 export class DrComponent implements OnInit {
 
   constructor(private common: CommonService,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private router:Router
     ) { }
 
   dr_data: UserInfo;
@@ -26,8 +27,9 @@ export class DrComponent implements OnInit {
     },err => console.log(err.status))
   }
 
-  chatUser() {
-    console.log("Hello mei toh chutiya hu jo yaha bhi chat message bheju");
+  chatUser(username:string,first_name:string) {
+    this.common.username = username;
+    this.router.navigateByUrl(`chat/${first_name}`);
   }
 
 }
