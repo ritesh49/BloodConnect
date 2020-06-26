@@ -12,4 +12,16 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  checkLocal():boolean{    
+    if(localStorage.getItem('UserData'))
+      return true;
+    else
+      return false;
+  }
+
+  signOut()
+  {
+    localStorage.removeItem('UserData');
+  }
+
 }

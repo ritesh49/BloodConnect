@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework import generics,permissions
-from .models import DonorReceiverModel,UserInfoModel
+from .models import UserInfoModel, ChatMessage,Clients
 from rest_framework.decorators import APIView
+from django.db.models import Q
 from rest_framework.parsers import JSONParser
-from .serializers import DonateReceiveSerializer,SignUpSerializer,UserInfoSerializer
+from .serializers import SignUpSerializer,UserInfoSerializer,ChatMessageSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
@@ -17,30 +18,8 @@ from django.conf import settings
 def redirectView(request):
     return HttpResponseRedirect(reverse('homeUrl'))
 
-
 def index(request):
     return render(request,'index.html')
-
-def chatIndex(request):
-    return render(request, 'chat/index.html')
-
-def room(request,room_name):
-    return render(request,'chat/room.html',{
-        'room_name':room_name
-    })
-
-class DonateReceiverView(APIView):
-    def get(self,request):
-        drs=DonorReceiverModel.objects.all()
-        serializer=DonateReceiveSerializer(drs,many=True)        
-        return Response(serializer.data)
-    
-    def post(self,request):
-        serializer=DonateReceiveSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,status=201)
-        return Response(serializer.errors,404)
 
 class SignUpView(APIView):
     def post(self,request):        
@@ -93,25 +72,19 @@ class GetDataView(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self,request,dr):
         data = UserInfoModel.objects.filter(blood_dr = dr)
-        serializer = UserInfoSerializer(data , many = True)
-        # try:            
-        #     for i in loginInfo[0]:                
-        #         if i =='first_name' or i == 'last_name':
-        #             data[0][i] = loginInfo[0][i]
-        #     for j,k in data[0].items():
-        #         res[j]=k
-        # except:
-        #     print('error Occured')
+        serializer = UserInfoSerializer(data , many = True)        
         return Response(serializer.data)
     def post(self,request,dr):
         data = UserInfoModel.objects.all()
-        serializer = UserInfoSerializer(data , many = True)
-        # try:            
-        #     for i in loginInfo[0]:                
-        #         if i =='first_name' or i == 'last_name':
-        #             data[0][i] = loginInfo[0][i]
-        #     for j,k in data[0].items():
-        #         res[j]=k
-        # except:
-        #     print('error Occured')
+        serializer = UserInfoSerializer(data , many = True)        
         return Response(serializer.data)
+
+class ChatView(APIView):
+    def get(self,request,from_userId): # Load Previous chats of the user
+        username = UserInfoModel.objects.filter(id = from_userId)
+        for i in username:
+            username = i.username
+        messages = ChatMessage.objects.filter(Q(from_user = from_userId)|Q(to_user = username)) # OR query wih Q
+        serializer = ChatMessageSerializer(messages, many=True)
+        return Response(serializer.data)
+        

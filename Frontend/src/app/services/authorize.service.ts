@@ -15,7 +15,7 @@ export class AuthorizeService {
   signUpUrl = 'api/sign-up';
 
   validateUser(username:string, password:string):Observable<any>
-  { 
+  {    
     let tdvalue = 7 * 1000 * 24; //It is the Time Expiration Delta of JWT
     let userObj = {
       username,

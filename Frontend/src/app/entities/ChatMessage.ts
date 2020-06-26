@@ -1,6 +1,6 @@
 export class ChatMessage {
-    from:string;
-    to:string;
-    date:string;
+    from_user:string;
+    to_user:string;
+    date_sent:string;
     message:string;
 }
