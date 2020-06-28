@@ -18,28 +18,37 @@ export class CommonService {
   private djangoURL = 'http://localhost:8000';
   private loadDataUrl = '/api/get_data/';
   private user_data_url = '/api/get_user_data/';
-  private contact_us_url = '/api/contact_bk_us';
+  private contact_us_url = '/api/contact_us/';
   private refresh_token_url = '/api/token/refresh';
 
-  loadData(dr:string):Observable<UserInfo>{
+  getLoggedUser() {
+    try {
+      return JSON.parse(localStorage.getItem('UserData'))
+    }
+    catch(err) {
+      console.error(err);
+      return 'localstorage  undefined'
+    }
+  }
+
+  loadData(dr:string):Observable<UserInfo[]>{
     let httpHeaders = {
       headers:new HttpHeaders({
       'Content-Type':'application/json',
       'Authorization': localStorage ? localStorage.getItem("TokenInfo") ? 'Bearer ' + JSON.parse(localStorage.getItem("TokenInfo")).access : 'localstorage.getItem("TokenInfo") Undefined' : 'localstorage undefined'
     })
   }
-    return this.http.get<UserInfo>(this.djangoURL+this.loadDataUrl+dr,httpHeaders).pipe();
+    return this.http.get<UserInfo[]>(this.djangoURL+this.loadDataUrl+dr,httpHeaders).pipe();
   }
 
-  contactUs(contactObj:ContactUs,token:any):Observable<ContactUs> //TODO: Need To configure the Contact Us in Home page
+  contactUs(contactObj:ContactUs):Observable<ContactUs>
   {
     let httpHeaders = {
       headers:new HttpHeaders({
-      'Content-Type':'application/json',
-      'Authorization': 'Bearer ' +token.access
+      'Content-Type':'application/json'      
     })
     }
-    return this.http.get<ContactUs>(this.djangoURL+this.user_data_url,httpHeaders).pipe();
+    return this.http.post<ContactUs>(this.djangoURL+this.contact_us_url,contactObj,httpHeaders).pipe();
   }
 
   getUserData(username:string,token:any):Observable<UserInfo>{

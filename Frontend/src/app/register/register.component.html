@@ -4,7 +4,7 @@
     <div class="form-horizontal form-group" role="form">
         <h2>Registration</h2>
         <div style="display: flex; flex-wrap: wrap; justify-content: center;" class="image-cropper form-group">
-            <img style="border: 5px solid #756152;" id="profileImage" [src]="profile_img">
+            <img style="border: 5px solid #756152;" *ngIf = "profile_img" id="profileImage" [src]="profile_img">
             <div class="col-sm-9">
                 <label class="form-control imageLabel">Select Profile Photo
                 <input (change) = "getImage($event)" accept="image/*" style="display: none;" type="file">

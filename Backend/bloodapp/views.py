@@ -1,19 +1,18 @@
-from django.shortcuts import render
-from rest_framework import generics,permissions
+from rest_framework import permissions
 from .models import UserInfoModel, ChatMessage,Clients
 from rest_framework.decorators import APIView
 from django.db.models import Q
-from rest_framework.parsers import JSONParser
-from .serializers import SignUpSerializer,UserInfoSerializer,ChatMessageSerializer
+from .serializers import SignUpSerializer,UserInfoSerializer,ChatMessageSerializer,ClientSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate # TODO: use authenticate while user loggs in
 from django.http import HttpResponse, HttpResponseNotFound, Http404,  HttpResponseRedirect, FileResponse
-from django.shortcuts import render, get_object_or_404, get_list_or_404, reverse
+from django.shortcuts import render, reverse
 from django.utils.encoding import smart_str
 from django.conf import settings
+from django.core.mail import send_mail,EmailMessage
 
 def redirectView(request):
     return HttpResponseRedirect(reverse('homeUrl'))
@@ -80,11 +79,39 @@ class GetDataView(APIView):
         return Response(serializer.data)
 
 class ChatView(APIView):
-    def get(self,request,from_userId): # Load Previous chats of the user
-        username = UserInfoModel.objects.filter(id = from_userId)
-        for i in username:
-            username = i.username
-        messages = ChatMessage.objects.filter(Q(from_user = from_userId)|Q(to_user = username)) # OR query wih Q
+    permission_classes = (IsAuthenticated,)
+    def get(self,request,from_user,to_user): # Load Previous chats of the user
+        # username = UserInfoModel.objects.filter(id = from_userId)
+        # for i in username:
+        #     username = i.username
+        # messages = ChatMessage.objects.filter(Q(from_user = from_userId)|Q(to_user = username)) # OR query wih Q
+        messages = ChatMessage.objects.filter(Q(from_user = from_user,to_user = to_user) | Q(from_user = to_user,to_user = from_user))
         serializer = ChatMessageSerializer(messages, many=True)
         return Response(serializer.data)
+
+class ClientView(APIView):
+    permission_classes = (IsAuthenticated,)    
+    def get(self,request):
+        online_users = Clients.objects.all()
+        serializer = ClientSerializer(online_users,many=True)
+        return Response(serializer.data)
         
+class ContactUsView(APIView):
+    def post(self,request):
+        data = request.data        
+        message = '''
+Name:- {name}
+Email:- {email}
+Mobile No:- {mobile}
+Message:- {messages}
+        '''.format(**data)
+        send_mail(
+            subject = 'Contact Us from BloodConnect',
+            message = message,
+            from_email = data['email'],
+            recipient_list = ['riteshramchandani123@gmail.com','ritesh.ramchandani.it16@ggits.org','ritesh.ramchandani.it16@ggits.net',],
+            fail_silently = True
+        )        
+        # email = EmailMessage('TESTING SUBJECT','TESTING BODY','faqritesh@gmail.com',['riteshramchandani123@gmail.com',])
+        # email.send()
+        return Response({'success':'Mail Sent'})

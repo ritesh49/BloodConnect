@@ -1,5 +1,6 @@
 import os
 import datetime
+import socket
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -9,10 +10,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '--(mga-9mzd!j=43+f7-xv_6pr0kk=eu32(8)94kokid=*_e1!'
+SECRET_KEY = '--(mga-9mzd!j=43+f7-xvhi_6pr0kkmyself=eu32ritesh(8)94kokidiLovedTejaswinee=*_e1!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+EMAIL_HOST= socket.gethostbyname('smtp.gmail.com')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'faqritesh@gmail.com'
+EMAIL_HOST_PASSWORD = 'riteshritesh'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 
 ALLOWED_HOSTS = []
 

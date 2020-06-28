@@ -1,6 +1,6 @@
 export class ContactUs{
     name:string;
     email:string;
-    address:string;
+    mobile:string;
     messages:string;
 }

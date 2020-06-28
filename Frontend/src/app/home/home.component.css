@@ -160,7 +160,7 @@ a:hover {
   margin-top: 5px;
 }
 .fh5co-about-us a {
-  color: #fff !important;
+  color: #fff;
   border-color: #4e2b0d;
   border-radius: 0;
   min-width: 150px;

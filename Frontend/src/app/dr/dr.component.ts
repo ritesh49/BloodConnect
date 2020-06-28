@@ -15,20 +15,21 @@ export class DrComponent implements OnInit {
     private router:Router
     ) { }
 
-  dr_data: UserInfo;
-  dr_info:string;
+  dr_data: UserInfo[];
+  dr_info:string;  
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.dr_info = this.route.snapshot.paramMap.get("name");
     this.common.loadData(this.dr_info)
     .subscribe(data => {
-      console.log(data);
-      this.dr_data = data;
+      console.log(data);      
+      this.dr_data = data.filter(obj => obj.username != JSON.parse(localStorage.getItem('UserData')).username);
     },err => console.log(err.status))
   }
 
-  chatUser(username:string,first_name:string) {
-    this.common.username = username;
+  chatUser(username:string,first_name:string,to_user_data) {
+    localStorage.setItem('ToUserData',JSON.stringify(to_user_data))
+    localStorage.setItem('to_user',username);
     this.router.navigateByUrl(`chat/${first_name}`);
   }
 
