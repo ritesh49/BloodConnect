@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserInfoModel,ChatMessage
+from .models import UserInfoModel,ChatMessage,Clients
 from django.contrib.auth.models import User
 
 # class DonateReceiveSerializer(serializers.ModelSerializer):
@@ -30,3 +30,8 @@ class ChatMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMessage
         fields = '__all__'
+
+class ClientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Clients
+        fields = ['username']
