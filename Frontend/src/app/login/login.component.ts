@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser(){ 
-    this.username = this.username;
+    this.username = this.username.toLowerCase();
     this.authorization.validateUser(this.username,this.password)
     .subscribe(tokenInfo => {      
       this.common.authToken.access = '';

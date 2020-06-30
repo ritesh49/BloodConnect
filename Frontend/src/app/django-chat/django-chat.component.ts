@@ -30,7 +30,7 @@ export class DjangoChatComponent implements OnInit {
       ? localStorage.getItem('to_user')
       : 'undefined';
     this.subject = webSocket(
-      `ws://localhost:8000/ws/chat/${
+      `wss://blood-connect-major.herokuapp.com/ws/chat/${
         JSON.parse(localStorage.getItem('UserData')).username
       }/`
     );

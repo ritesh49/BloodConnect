@@ -9,7 +9,8 @@ export class AuthorizeService {
 
   constructor(private http:HttpClient) { }
   // djangoUrl = 'https://ritesh49.pythonanywhere.com/';
-  private djangoUrl = 'http://localhost:8000/';
+  // private djangoUrl = 'http://localhost:8000/';
+  private djangoUrl = 'https://blood-connect-major.herokuapp.com/';
   loginUrl = 'api/token';
   regURL = 'api/register';
   signUpUrl = 'api/sign-up';

@@ -10,7 +10,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '--(mga-9mzd!j=43+f7-xvhi_6pr0kkmyself=eu32ritesh(8)94kokidiLovedTejaswinee=*_e1!'
+SECRET_KEY = '--(mga-9mzd!j=43+f7-xvhi_6pr0kkmyself=eu32ritesh(8)94k=*_e1!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -24,7 +24,7 @@ EMAIL_HOST_PASSWORD = 'riteshritesh'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['blood-connect-major.herokuapp.com','localhost']
 
 
 # Application definition
@@ -106,11 +106,8 @@ DATABASES = {
 }
 
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1',6379)]
-        }
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
 
@@ -161,5 +158,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")   
+    os.path.join(BASE_DIR, "staticfiles")   
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
