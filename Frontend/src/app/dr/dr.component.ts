@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { UserInfo } from '../entities/UserInfo';
 import { CommonService } from '../services/common.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToasterComponent } from '../toaster/toaster.component';
 
 @Component({
   selector: 'app-dr',
@@ -12,7 +13,8 @@ export class DrComponent implements OnInit {
 
   constructor(private common: CommonService,
     private route:ActivatedRoute,
-    private router:Router
+    private router:Router,
+    private toaster:ToasterComponent
     ) { }
 
   dr_data: UserInfo[];
@@ -22,15 +24,26 @@ export class DrComponent implements OnInit {
     this.dr_info = this.route.snapshot.paramMap.get("name");
     this.common.loadData(this.dr_info)
     .subscribe(data => {
-      console.log(data);      
-      this.dr_data = data.filter(obj => obj.username != JSON.parse(localStorage.getItem('UserData')).username);
+      console.log(data);
+      if(localStorage!=undefined && localStorage.getItem("UserData")!=undefined)
+        this.dr_data = data.filter(obj => obj.username != JSON.parse(localStorage.getItem('UserData')).username);
+      else
+        this.dr_data = data
     },err => console.log(err.status))
   }
 
   chatUser(username:string,first_name:string,to_user_data) {
-    localStorage.setItem('ToUserData',JSON.stringify(to_user_data))
-    localStorage.setItem('to_user',username);
-    this.router.navigateByUrl(`chat/${first_name}`);
+    if(localStorage!=undefined && localStorage.getItem("UserData")!=undefined)
+    {
+      localStorage.setItem('ToUserData',JSON.stringify(to_user_data))
+      localStorage.setItem('to_user',username);
+      this.router.navigateByUrl(`chat/${first_name}`);
+    }
+    else
+    {
+      this.toaster.showInfo('Please Login , before contacting any user');
+      this.router.navigateByUrl('login')
+    }
   }
 
 }

@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   public registerInfo = new UserInfo();  
   password: string;
   secPassword: string;
-  profile_img = '/assets/images/default_image.jpg';
+  profile_img = '/static/front_end/assets/images/default_image.jpg';
   selectedFile: File;
 
   constructor(

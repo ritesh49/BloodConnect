@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 export class FileService {
 
   constructor(private http:HttpClient) { }
-  private djangoUrl = 'http://localhost:8000/';  
+  // private djangoUrl = 'http://localhost:8000/';  
+  private djangoUrl = 'https://blood-connect-major.herokuapp.com/';  
   private file_upload_download_url = 'api/file/';
 
 //   downloadFile(userId:number)
