@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthorizeService } from '../services/authorize.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authorize:AuthorizeService) { }
 
   ngOnInit(): void {
   }
@@ -21,6 +22,9 @@ export class NavBarComponent implements OnInit {
 
   signOut()
   {
+    this.authorize.logOutUser()
+    .subscribe(data => console.log(data),
+    err => console.error(err))
     localStorage.removeItem('UserData');
   }
 

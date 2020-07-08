@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToasterComponent } from '../toaster/toaster.component';
 
 @Component({
   selector: 'app-about',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private toaster:ToasterComponent) { }
 
   ngOnInit(): void {
+  this.toaster.showInfo('This Component Will be implemented in future Versions')
   }
 
 }

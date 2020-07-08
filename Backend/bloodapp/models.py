@@ -50,6 +50,7 @@ class UserInfoModel(models.Model):
 class Clients(models.Model):
     channel_name = models.CharField(default='', max_length=100)
     username = models.CharField(default='', max_length=50)
+    is_typing = models.BooleanField(default=False,blank=True)
 
     def __str__(self):
         return self.username  
@@ -58,9 +59,16 @@ class ChatMessage(models.Model):
     from_user = models.CharField(default = '',max_length = 50)
     to_user = models.CharField(default = '',max_length = 50)
     date_sent = models.DateTimeField(auto_now=True,max_length = 50)
-    message = models.CharField(default = '',max_length = 500)
-    is_online = models.BooleanField(default=False,blank=True)
-    is_typing = models.BooleanField(default=False,blank=True)
+    message = models.CharField(default = '',max_length = 500)    
 
     def __str__(self):
         return self.from_user
+
+class Profile(models.Model):
+    user = models.OneToOneField(User,related_name = 'profile' ,on_delete=models.CASCADE)
+    activation_key = models.CharField(max_length = 256)
+    key_expires = models.DateTimeField()
+
+    def __str__(self):
+        return self.user.username
+    

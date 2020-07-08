@@ -30,8 +30,7 @@ export class LoaderInterceptorService implements HttpInterceptor {
       .handle(
         req.clone({
           setHeaders: {
-            
-          },
+          }
         })
       )
       .pipe(
@@ -43,10 +42,6 @@ export class LoaderInterceptorService implements HttpInterceptor {
           },
           (err) => {
             this.spinner.hide();            
-            if (err.status == 401) {
-              this.common.refreshToken();
-              this.toaster.showInfo("Reload The page , This Bug will be resolved in later versions");
-            }            
           }
         )
       );

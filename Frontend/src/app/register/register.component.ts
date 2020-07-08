@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToasterComponent } from '../toaster/toaster.component';
 import { AuthorizeService } from '../services/authorize.service';
 import { SignUp } from '../entities/SignUp';
@@ -6,80 +6,132 @@ import { UserInfo } from '../entities/UserInfo';
 import { Router } from '@angular/router';
 import { CommonService } from '../services/common.service';
 import { FileService } from '../services/file.service';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
+import { MatStepper, MatHorizontalStepper } from '@angular/material/stepper';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [FileService]
+  providers: [FileService],
 })
 export class RegisterComponent implements OnInit {
-  public registerInfo = new UserInfo();  
-  password: string;
-  secPassword: string;
-  profile_img = '/static/front_end/assets/images/default_image.jpg';
+  public registerInfo = new UserInfo();
+  public signUpInfo = new SignUp();
+  @ViewChild('stepper', { static: true }) private myStepper: MatStepper;
+  @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
+  profile_img = '/assets/images/default_image.jpg';
   selectedFile: File;
+  verify: boolean;
+  value: string;
+  CreateAccountFormGroup: FormGroup;
+  PersonalDetailFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  isLinear = true;
 
   constructor(
     private toaster: ToasterComponent,
     private authorize: AuthorizeService,
     private router: Router,
-    private common: CommonService
+    private common: CommonService,
+    private _formBuilder: FormBuilder,
+    private fileservice:FileService
   ) {}
 
-  ngOnInit() {}
-
-  resizeImage = (settings: { // TODO: Resize image with this function
-    maxSize: number;
-    file: File;
-  }) => {
-    const file = settings.file;
-    const maxSize = settings.maxSize;
-    const reader = new FileReader();
-    const cnvImage = new Image();
-    const canvas = document.createElement('canvas');
-    const dataURItoBlob = (dataURI: string) => {
-      const bytes = dataURI.split(',')[0].indexOf('base64') >= 0 ?
-          atob(dataURI.split(',')[1]) :
-          unescape(dataURI.split(',')[1]);
-      const mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
-      const max = bytes.length;
-      const ia = new Uint8Array(max);
-      for (var i = 0; i < max; i++) ia[i] = bytes.charCodeAt(i);
-      return new Blob([ia], {type:mime});
-    };
-    const resize = () => {
-      let width = cnvImage.width;
-      let height = cnvImage.height;
-  
-      if (width > height) {
-          if (width > maxSize) {
-              height *= maxSize / width;
-              width = maxSize;
-          }
-      } else {
-          if (height > maxSize) {
-              width *= maxSize / height;
-              height = maxSize;
-          }
-      }
-  
-      canvas.width = width;
-      canvas.height = height;
-      canvas.getContext('2d').drawImage(cnvImage, 0, 0, width, height);
-      let dataUrl = canvas.toDataURL('image/jpeg');
-      return dataURItoBlob(dataUrl);
-    }
+  ngOnInit() {
+    this.CreateAccountFormGroup = this._formBuilder.group(
+      {
+        first_name: ['', [Validators.required, Validators.minLength(3)]],
+        last_name: ['', [Validators.required, Validators.minLength(3)]],
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/
+            ),
+          ],
+        ],
+        username: ['', [Validators.required, Validators.minLength(2)]],
+      },
+      { updateOn: 'blur' }
+    );
+    this.PersonalDetailFormGroup = this._formBuilder.group({
+      medications: [''],
+      bloodGroup: [
+        '',
+        [Validators.required, Validators.pattern(/(A|B|AB|O)[+-]/)],
+      ],
+      birth_date: ['', Validators.required],
+      height: ['', Validators.required],
+      weight: ['', Validators.required],
+      phone_no: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(15),
+        ],
+      ],
+      gender: ['-1', Validators.required],
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required],
+    });
   }
 
-checkProperties(obj,exceptions:string[],properties:string[]) {
-    debugger;
+  //TODO: See replacement for these getters
+  get medications() {
+    return this.PersonalDetailFormGroup.get('medications');
+  }
+  get bloodGroup() {
+    return this.PersonalDetailFormGroup.get('bloodGroup');
+  }
+  get birth_date() {
+    return this.PersonalDetailFormGroup.get('birth_date');
+  }
+  get height() {
+    return this.PersonalDetailFormGroup.get('height');
+  }
+  get weight() {
+    return this.PersonalDetailFormGroup.get('weight');
+  }
+  get phone_no() {
+    return this.PersonalDetailFormGroup.get('phone_no');
+  }
+  get gender() {
+    return this.PersonalDetailFormGroup.get('gender');
+  }
+  get first_name() {
+    return this.CreateAccountFormGroup.get('first_name');
+  }
+  get password() {
+    return this.CreateAccountFormGroup.get('password');
+  }
+  get username() {
+    return this.CreateAccountFormGroup.get('username');
+  }
+  get last_name() {
+    return this.CreateAccountFormGroup.get('last_name');
+  }
+  get email() {
+    return this.CreateAccountFormGroup.get('email');
+  }
+
+  checkProperties(obj, exceptions: string[], properties: string[]) {    
     for (var key in properties) {
-        if (!exceptions.includes(key) && (obj[key] || obj[key] == ""))
-            return false;
+      if (!exceptions.includes(key) && (obj[key] || obj[key] == ''))
+        return false;
     }
     return true;
-}
+  }
 
   getImage(event) {
     let file = event.target.files
@@ -89,66 +141,96 @@ checkProperties(obj,exceptions:string[],properties:string[]) {
       this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = (imageEvent) => {
-        document.getElementById("profileImage").setAttribute('src',reader.result as string);
+        document
+          .getElementById('profileImage')
+          .setAttribute('src', reader.result as string);
       };
       reader.readAsDataURL(this.selectedFile);
-    } else console.error('No File Selected');
+    } else console.error('Select Image File only');
   }
 
-  registerUser() {
-    if (Object.keys(this.registerInfo).length == 12) {
-      debugger
-      let regObj = new SignUp();
-      regObj.email = this.registerInfo.email;
-      regObj.first_name = this.registerInfo.first_name;
-      regObj.last_name = this.registerInfo.last_name;
-      regObj.password = this.password;
-      regObj.username = this.registerInfo.username;
-      if(this.selectedFile) {
-        let imageData = new FormData();
-        this.registerInfo.profile_image = imageData.append('profile_image',this.selectedFile);
-      }
-      // For Registering User
-      this.authorize.SignUpUSer(regObj).subscribe(
+  // TODO: if a user with particular account send too many request that block it's user and send activation mail
+  checkUsername() {
+    if (this.CreateAccountFormGroup.valid) {
+      this.authorize
+        .checkUsername(this.CreateAccountFormGroup.controls['username'].value)
+        .subscribe(
+          (data) => {
+            if (data['success']) {
+              this.stepper.selected.completed = true;
+              this.stepper.selected.editable = false;
+              this.stepper.next();
+            }
+          },
+          (err) => {
+            if (err.status == 409)
+              this.toaster.showWarning('Username already taken');
+            else this.toaster.showError('Error Occured Contact Support');
+          }
+        );
+    } else
+      this.toaster.showError(
+        'Invalid Form Submission, Make Mure You Fill Each Field Appropiately'
+      );
+  }
+
+  uploadImage(userId:number) {
+    let image_data = new FormData();
+    image_data.append('file',this.selectedFile);
+    this.fileservice.uploadFile(image_data,userId)
+    .subscribe(data => {
+      if(data['success'])
+        this.toaster.showSuccess('Profile Picture Succesfully Changed')
+    })
+  }
+
+  createAccount() {
+    // console.log(this.CreateAccountFormGroup.controls);
+    if (this.CreateAccountFormGroup.valid) {
+      this.authorize.SignUpUSer(this.CreateAccountFormGroup.value).subscribe(
         (data) => {
-          console.log(data);
+          if (data['success'])
+            this.toaster.showSuccess(
+              'Account Succesfully Created, Verify Account by provided link in E-mail'
+            );
         },
         (err) => {
-          for (let field in err.error) {
-            for (let j = 0; j < err.error[field].length; j++) {
-              if (field == 'username') {
-                this.toaster.showWarning(
-                  `Account Already Registered with ${this.registerInfo.username} Username , Try login`
-                );
-                this.router.navigate(['login']);
-              } else this.toaster.showError(field + ':-' + err.error[field][j]);
-            }
-          }
+          // for (let field in err.error) {
+          //   for (let j = 0; j < err.error[field].length; j++) {
+          //     if (field == 'username') {
+          //       this.toaster.showWarning(
+          //         `Account Already Registered with ${this.registerInfo.username} Username , Try login`
+          //       );
+          //     } else this.toaster.showError(field + ':-' + err.error[field][j]);
+          //   }
+          // }
+          this.toaster.showError('Error Occured , Drop a message in Contact Us');
+        }        
+      );
+    } else this.toaster.showWarning('Fill All Fields with Valid Values for Creating Account');
+  }
+
+  registerUser() {    
+    if (this.PersonalDetailFormGroup.valid) {
+      this.createAccount();
+      this.CreateAccountFormGroup.value
+      this.registerInfo = {...this.CreateAccountFormGroup.value,...this.PersonalDetailFormGroup.value,blood_dr:'donor'}
+      this.authorize.registerUser(this.registerInfo).subscribe(
+        (data) => {
+          if(this.selectedFile)
+            this.uploadImage(data.id)
+          console.log(data);
         },
+        (err) => console.log(err),
         () => {
-          this.authorize.registerUser(this.registerInfo).subscribe(
-            (data) => {
-              console.log(data);
-            },
-            (err) => console.log(err),
-            () => {
-              let userObj = {
-                username: this.registerInfo.username,
-                password: this.password,
-              };
-              this.common.userObg = userObj;
-              this.router.navigate(['login']);
-            }
-          );
+          let userObj = {
+            username: this.registerInfo.username,
+            password: this.CreateAccountFormGroup.controls['password'].value,
+          };
+          this.common.userObg = userObj;
+          this.router.navigate(['login']);
         }
       );
-    } else {
-      if (this.password != this.secPassword)
-        this.toaster.showError('Both Passwords Should Match');
-      else
-        this.toaster.showWarning(
-          'Please Fill The required Fields first before Submitting Form'
-        );
-    }
+    } else this.toaster.showError('Invalid Personal Details Form Submission');
   }
 }

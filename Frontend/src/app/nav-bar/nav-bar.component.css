@@ -34,11 +34,11 @@ body {
   }
 
   .aboutUsImage {
-      background-image: url("/static/front_end/assets/images/about-us-bg.jpg");
+      background-image: url("/assets/images/about-us-bg.jpg");
   }
 
   .BgImage {
-      background-image: url("/static/front_end/assets/images/banner2.jpg");
+      background-image: url("/assets/images/banner2.jpg");
   }
   
   a, a:hover {
@@ -72,7 +72,7 @@ body {
     width: 38px;
     left: 0;
     top: 0;
-    background: url("/static/front_end/assets/images/right-quote.png");
+    background: url("/assets/images/right-quote.png");
     background-repeat: no-repeat;
   }
   .fh5co-banner-text-box .quote-box::after {
@@ -80,7 +80,7 @@ body {
     position: absolute;
     height: 38px;
     width: 38px;
-    background: url("/static/front_end/assets/images/left-quote.png");
+    background: url("/assets/images/left-quote.png");
     background-repeat: no-repeat;
     right: 0;
     bottom: 0;
@@ -98,7 +98,7 @@ body {
   }
   
   .fh5co-network, .fh5co-about-us {
-    background: url("/static/front_end/assets/images/about-bg.jpg");
+    background: url("/assets/images/about-bg.jpg");
     /* background-color: #959393; */
     background-repeat: no-repeat;
     background-position: center;
@@ -179,7 +179,7 @@ body {
     position: relative;
     padding: 50px 0;
     margin: 70px 0;
-    background: url("/static/front_end/assets/images/gym2.jpg");
+    background: url("/assets/images/gym2.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-color: #000;
@@ -227,7 +227,7 @@ body {
     width: 20px;
     left: -18px;
     top: -10px;
-    background: url("/static/front_end/assets/images/right-quote-white.png");
+    background: url("/assets/images/right-quote-white.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
@@ -236,7 +236,7 @@ body {
     position: absolute;
     height: 20px;
     width: 20px;
-    background: url("/static/front_end/assets/images/left-quote-white.png");
+    background: url("/assets/images/left-quote-white.png");
     background-repeat: no-repeat;
     right: -18px;
     bottom: -10px;

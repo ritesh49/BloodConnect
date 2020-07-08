@@ -1,6 +1,6 @@
 import json
 from asgiref.sync import async_to_sync,sync_to_async
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import WebsocketConsumer,AsyncWebsocketConsumer
 from .models import Clients,ChatMessage,UserInfoModel
 from django.db import close_old_connections
 from django.contrib.auth.models import User
@@ -13,7 +13,7 @@ class DRChatConsumer(WebsocketConsumer):
         self.from_username = self.scope['url_route']['kwargs']['username']
         user = User.objects.get(username = self.from_username)        
         self.username = user.username
-        Clients.objects.create(channel_name = self.channel_name,username = self.username)
+        Clients.objects.update_or_create(channel_name = self.channel_name,username = self.username)
         self.accept()
 
     def disconnect(self,close_code):

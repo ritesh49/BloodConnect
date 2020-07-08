@@ -7,16 +7,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AvatarModule } from 'ngx-avatar';
 import { NotifierModule, NotifierOptions } from "angular-notifier";
-import { CountUpModule } from 'countup.js-angular2';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SliderModule } from 'angular-image-slider';
+import {NgxAutoScrollModule} from "ngx-auto-scroll";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HttpClient,HTTP_INTERCEPTORS , HttpHandler, HttpClientModule } from '@angular/common/http';
+import { HttpClient,HTTP_INTERCEPTORS , HttpHandler, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { LoaderInterceptorService } from './services/loader-interceptor.service';
 import { ToasterComponent } from './toaster/toaster.component';
 import { UiTestingComponent } from './ui-testing/ui-testing.component';
@@ -85,7 +85,6 @@ const customNotifierOptions: NotifierOptions = {
     ReactiveFormsModule,
     FormsModule,
     MaterialModule,
-    CountUpModule,
     AngularTiltModule,
     CarouselModule,
     NotifierModule.withConfig(customNotifierOptions),
@@ -93,8 +92,9 @@ const customNotifierOptions: NotifierOptions = {
     NgxSpinnerModule,
     BrowserAnimationsModule,
     AvatarModule,
-    SliderModule,
-    NgbModule
+    SliderModule,    
+    NgbModule,
+    NgxAutoScrollModule
   ],
   providers: [
     {

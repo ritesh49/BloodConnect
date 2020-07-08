@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { webSocket } from 'rxjs/webSocket';
 import { ChatMessage } from '../entities/ChatMessage';
 import { CommonService } from '../services/common.service';
 import { ChatService } from '../services/chat.service';
+import { NgxAutoScroll } from 'ngx-auto-scroll';
+
 @Component({
   selector: 'app-django-chat',
   templateUrl: './django-chat.component.html',
@@ -17,7 +19,8 @@ export class DjangoChatComponent implements OnInit {
   showMessages: ChatMessage[];
   online_users: { username: string }[];
   to_user_data;
-  isOnline:boolean
+  isOnline: boolean;
+  @ViewChild(NgxAutoScroll) ngxAutoScroll: NgxAutoScroll;
 
   constructor(
     private common: CommonService,
@@ -25,17 +28,23 @@ export class DjangoChatComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {    
-    this.to_user_data = localStorage.getItem('ToUserData') ? JSON.parse(localStorage.getItem('ToUserData')) :console.error('localStorage.getItem("ToUserData") undefined')
+    this.to_user_data = localStorage.getItem('ToUserData')
+      ? JSON.parse(localStorage.getItem('ToUserData'))
+      : console.error('localStorage.getItem("ToUserData") undefined');
     this.room_name = localStorage.getItem('to_user')
       ? localStorage.getItem('to_user')
       : 'undefined';
     this.subject = webSocket(
       `wss://blood-connect-major.herokuapp.com/ws/chat/${
+        // `ws://localhost:8000/ws/chat/${
         JSON.parse(localStorage.getItem('UserData')).username
       }/`
     );
     this.subject.subscribe(
-      (msg: ChatMessage) => this.showMessages.push(msg),
+      (msg: ChatMessage) => {
+        this.showMessages.push(msg);
+        this.ngxAutoScroll.forceScrollDown();
+      },
       (err) => console.error(err),
       () => console.log('Complete')
     );
@@ -45,10 +54,18 @@ export class DjangoChatComponent implements OnInit {
       .subscribe((messages) => {
         this.chatservice.getOnlineUsers().subscribe((users) => {
           this.online_users = users;
-          this.isOnline = this.online_users.find(obj => obj.username == this.to_user_data.username) ? true : false
-          this.showMessages = messages;          
+          this.isOnline = this.online_users.find(
+            (obj) => obj.username == this.to_user_data.username
+          )
+            ? true
+            : false;
+          this.showMessages = messages;
         });
       });
+  }
+
+  public forceScrollDown(): void {
+    this.ngxAutoScroll.forceScrollDown();
   }
 
   submitMessage() {
