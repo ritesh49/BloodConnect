@@ -20,7 +20,8 @@ export class DrComponent implements OnInit {
   dr_data: UserInfo[];
   dr_info:string;  
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
+    this.toaster.showInfo('This Screen will be improved in Later Versions')
     this.dr_info = this.route.snapshot.paramMap.get("name");
     this.common.loadData(this.dr_info)
     .subscribe(data => {

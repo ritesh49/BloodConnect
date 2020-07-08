@@ -35,8 +35,7 @@ export class CommonService {
   loadData(dr:string):Observable<UserInfo[]>{
     let httpHeaders = {
       headers:new HttpHeaders({
-      'Content-Type':'application/json',
-      'Authorization': localStorage ? localStorage.getItem("TokenInfo") ? 'Bearer ' + JSON.parse(localStorage.getItem("TokenInfo")).access : 'localstorage.getItem("TokenInfo") Undefined' : 'localstorage undefined'
+      'Content-Type':'application/json'      
     })
   }
     return this.http.get<UserInfo[]>(this.djangoURL+this.loadDataUrl+dr,httpHeaders).pipe();
@@ -52,11 +51,11 @@ export class CommonService {
     return this.http.post<ContactUs>(this.djangoURL+this.contact_us_url,contactObj,httpHeaders).pipe();
   }
 
-  getUserData(username:string,token:any):Observable<UserInfo>{
+  getUserData(username:string):Observable<UserInfo>{
     let httpHeaders = {
       headers:new HttpHeaders({
       'Content-Type':'application/json',
-      'Authorization': 'Bearer ' +token.access
+      'Authorization': 'Bearer ' +JSON.parse(localStorage.getItem('TokenInfo')).access
     })
     }
     return this.http.get<UserInfo>(this.djangoURL+this.user_data_url+username,httpHeaders).pipe();
@@ -65,10 +64,10 @@ export class CommonService {
   refreshToken(){
     let headers = {
       headers:new HttpHeaders({
-        'Content-Type':'application/json'        
+        'Content-Type':'application/json'
       })
     }
-    let refresh = JSON.parse(localStorage.getItem("TokenInfo")).refresh;
+    let refresh = JSON.parse(localStorage.getItem("TokenInfo")).token;
     let tokenObj = { refresh }
     this.http.post(this.djangoURL+this.refresh_token_url,JSON.stringify(tokenObj),headers).pipe()
     .subscribe(accessToken => {

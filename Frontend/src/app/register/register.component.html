@@ -1,150 +1,161 @@
 <body>
-<app-nav-bar></app-nav-bar>
-<div class="container">
-    <div class="form-horizontal form-group" role="form">
-        <h2>Registration</h2>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center;" class="image-cropper form-group">
-            <img style="border: 5px solid #756152;" *ngIf = "profile_img" id="profileImage" [src]="profile_img">
-            <div class="col-sm-9">
-                <label class="form-control imageLabel">Select Profile Photo
-                <input (change) = "getImage($event)" accept="image/*" style="display: none;" type="file">
-                </label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="firstName" class="col-sm-4 control-label">First Name</label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="registerInfo.first_name" type="text" id="firstName" placeholder="First Name" class="form-control" autofocus>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="lastName" class="col-sm-4 control-label">Last Name</label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="registerInfo.last_name" type="text" id="lastName" placeholder="Last Name" class="form-control" autofocus>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="email" class="col-sm-4 control-label">Email* </label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="registerInfo.email" type="email" id="email" placeholder="Email" class="form-control" name="email">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="username" class="col-sm-4 control-label">Username* </label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="registerInfo.username" type="text" id="username" placeholder="Username" class="form-control" name="username">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-sm-4 control-label">Password*</label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="password" type="password" id="password" placeholder="Password" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-sm-4 control-label">Confirm Password*</label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="secPassword" type="password" id="secPassword" placeholder="Password" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="birthDate" class="col-sm-4 control-label">Date of Birth*</label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="registerInfo.birth_date" type="date" id="birthDate" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="phoneNumber" class="col-sm-4 control-label">Phone number </label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="registerInfo.phone_no" type="phoneNumber" id="phoneNumber" placeholder="Phone number" class="form-control">
-                <span class="help-block">Your phone number won't be disclosed anywhere </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="BloodGroup" class="col-sm-4 control-label">Blood Group* </label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="registerInfo.bloodGroup" type="text" id="BloodGroup" placeholder="Please Write your Blood Group"
-                    class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="Height" class="col-sm-4 control-label">Height* </label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="registerInfo.height" type="number" id="height" placeholder="Please write your height in centimetres"
-                    class="form-control">
-            </div>
-        </div>        
-        <div class="form-group">
-            <label for="weight" class="col-sm-4 control-label">Weight* </label>
-            <div class="col-sm-9">
-                <input [(ngModel)]="registerInfo.weight" type="number" id="weight" placeholder="Please write your weight in kilograms"
-                    class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-4">Gender</label>
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="radio-inline">
-                            <input [(ngModel)]="registerInfo.gender" type="radio" name="gender" id="femaleRadio" value="Female">Female
-                        </label>
-                    </div>
-                    <div class="col-sm-4">
-                        <label class="radio-inline">
-                            <input [(ngModel)]="registerInfo.gender" type="radio" name="gender" id="maleRadio" value="Male">Male
-                        </label>
-                    </div>
+    <app-nav-bar></app-nav-bar>
+    <div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w780">
+            <div class="card card-3">
+                <div class="card-heading">
+                </div>
+                <div class="card-body">
+                    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+                        <ng-template matStepperIcon="edit">
+                            <mat-icon>done</mat-icon>
+                        </ng-template>
+                        <mat-step class="matlocal" [stepControl]="CreateAccountFormGroup">
+                            <form autocomplete="off" style="margin-top: 15px;" [formGroup]="CreateAccountFormGroup">
+                                <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                                <h2 class="title">Create Account</h2><br><br>
+                                <div class="row">
+                                    <div class="col-sm-5 input-group">
+                                        <div *ngIf="(first_name.invalid && first_name.touched) || first_name.dirty">
+                                            <small *ngIf="first_name.errors?.required" class="text-danger">First Name
+                                                Required</small>
+                                            <small *ngIf="first_name.errors?.minlength" class="text-danger">Min Length
+                                                should be 3</small>
+                                        </div>
+                                        <input matInput formControlName="first_name" class="input--style-3" type="text"
+                                            placeholder="First Name" required>
+                                    </div>
+                                    <div class="col-sm-5 input-group rightTags">
+                                        <div *ngIf="(last_name.invalid && last_name.touched) || last_name.dirty">
+                                            <small *ngIf="last_name.errors?.required" class="text-danger">Last Name
+                                                Required</small>
+                                            <small *ngIf="last_name.errors?.minlength" class="text-danger">Min Length
+                                                should be 3</small>
+                                        </div>
+                                        <input matInput formControlName="last_name" class="input--style-3" type="text"
+                                            placeholder="Last Name" required>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <div *ngIf="(username.invalid && username.touched) || username.dirty">
+                                        <small *ngIf="username.errors?.required" class="text-danger">Username
+                                            Required</small>
+                                        <small *ngIf="username.errors?.minlength" class="text-danger">Min Length should
+                                            be 2</small>
+                                    </div>
+                                    <input matInput oninput="this.value = this.value.toLowerCase()" formControlName="username" class="input--style-3" type="text"
+                                        placeholder="Username" required>
+                                </div>
+                                <div class="input-group">
+                                    <div *ngIf="(password.invalid && password.touched) || password.dirty">
+                                        <small *ngIf="password.errors?.required" class="text-danger">Password
+                                            Required</small>
+                                        <small *ngIf="password.errors?.pattern" class="text-danger">Enter a strong
+                                            Password</small>
+                                    </div>
+                                    <input matInput formControlName="password" class="input--style-3" type="password"
+                                        placeholder="Password" required>
+                                </div>
+                                <div class="input-group">
+                                    <div *ngIf="(email.invalid && email.touched) || email.dirty">
+                                        <small *ngIf="email.errors?.required" class="text-danger">Email Required</small>
+                                        <small *ngIf="email.errors?.email" class="text-danger">Enter Valid Email
+                                            Address</small>
+                                    </div>
+                                    <input matInput formControlName="email" class="input--style-3" type="email"
+                                        placeholder="Email" required>
+                                </div>
+                                <div class="p-t-10">
+                                    <button mat-button mat-raised-button (click)="checkUsername()" class="btn btn--pill btn--green">Next</button>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step class="matlocal" [stepControl]="PersonalDetailFormGroup" completed="false">
+                            <form autocomplete="off" [formGroup]="PersonalDetailFormGroup">
+                                <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                                <h2 class="title">Personal Details</h2><br><br>
+                                <div class="row">
+                                    <div class="col-sm-5 input-group">
+                                        <div *ngIf="(birth_date.invalid && birth_date.touched) || birth_date.dirty">
+                                            <small *ngIf="birth_date.errors?.required" class="text-danger">Birth Date Required</small>
+                                        </div>
+                                        <input matInput formControlName="birth_date" class="input--style-3 js-datepicker"
+                                            type="date" placeholder="Birthdate">
+                                    </div>
+                                    <div class="col-sm-5 input-group rightTags">
+                                        <div class="rs-select2 js-select-simple select--no-search">
+                                            <div *ngIf="(gender.invalid && gender.touched) || gender.dirty">
+                                                <small *ngIf="gender.errors?.required" class="text-danger">Gender Required</small>
+                                            </div>
+                                            <select class="custom-login" formControlName="gender" name="gender">
+                                                <option value="-1" selected disabled>Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            <div class="select-dropdown"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5 input-group">
+                                        <div *ngIf="(phone_no.invalid && phone_no.touched) || phone_no.dirty">
+                                            <small *ngIf="phone_no.errors?.required" class="text-danger">Mobile No. Required</small>
+                                            <small *ngIf="phone_no.errors?.minlength" class="text-danger">Minimum length 10</small>
+                                            <small *ngIf="phone_no.errors?.maxlength" class="text-danger">Maximun length 15</small>
+                                        </div>
+                                        <input matInput formControlName="phone_no" class="input--style-3" type="number"
+                                            placeholder="Contact No.">
+                                    </div>
+                                    <div class="col-sm-5 input-group rightTags">
+                                        <div *ngIf="(bloodGroup.invalid && bloodGroup.touched) || bloodGroup.dirty">
+                                            <small *ngIf="bloodGroup.errors?.required" class="text-danger">Blood Group Required</small>
+                                            <small *ngIf="bloodGroup.errors?.pattern" class="text-danger">Enter Valid Blood Group</small>
+                                        </div>
+                                        <input matInput formControlName="bloodGroup" class="input--style-3" type="text"
+                                            placeholder="Blood Group">
+                                    </div>
+                                    <div class="col-sm-5 input-group">
+                                        <div *ngIf="(height.invalid && height.touched) || height.dirty">
+                                            <small *ngIf="height.errors?.required" class="text-danger">Height Required</small>
+                                        </div>
+                                        <input matInput formControlName="height" class="input--style-3" type="number"
+                                            placeholder="Height (in centimeter)">
+                                    </div>
+                                    <div class="col-sm-5 input-group  rightTags">
+                                        <div *ngIf="(weight.invalid && weight.touched) || weight.dirty">
+                                            <small *ngIf="weight.errors?.required" class="text-danger">Weight Required</small>
+                                        </div>
+                                        <input matInput formControlName="weight" class="input--style-3" type="number"
+                                            placeholder="Weight (in centimeter)">
+                                    </div>
+                                </div>
+                                <div class="input-group">                                    
+                                    <textarea formControlName="medications" style="border:none;" rows="2" cols="50"
+                                        class="input--style-3" type="text" placeholder="Medications"></textarea>
+                                </div>
+                                <div class="p-t-10">
+                                    <button mat-button mat-raised-button matStepperNext class="btn btn--pill btn--green">Next</button>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step *ngIf="true" class="matlocal" [stepControl]="secondFormGroup" completed="false">
+                            <h2 class="title">Profile Photo</h2><br><br>
+                            <div style="display:grid;justify-content: center;margin-top:45px;">
+                                <img style="border: 5px solid #756152;margin: auto;" width="200" height="200"
+                                    *ngIf="profile_img" id="profileImage" [src]="profile_img">
+                                <label style="margin-top: 30px;" class="btn btn--pill btn--green">Change Profile Pic
+                                    <input (change)="getImage($event)" accept="image/*" style="display: none;"
+                                        type="file">
+                                </label>
+                            </div>
+                            <div style="display: flex; justify-content: center;" class="p-t-10">
+                                <button (click)="registerUser()" mat-button mat-raised-button class="btn btn--pill btn--green">Complete Registration</button>
+                            </div>
+                        </mat-step>
+                    </mat-horizontal-stepper>
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label col-sm-4">Want to:</label>
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="radio-inline">
-                            <input [(ngModel)]="registerInfo.blood_dr" type="radio" name="blood" id="DonorType" value="Donor">Donor
-                        </label>
-                    </div>
-                    <div class="col-sm-4">
-                        <label class="radio-inline">
-                            <input [(ngModel)]="registerInfo.blood_dr" type="radio" name="blood" id="ReceiverType" value="Receiver">Receiver
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="form-group">
-            <label class="control-label col-sm-4">Do u have Any Medications or any Family Disease Trait?</label>
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="radio-inline">
-                            <input [(ngModel)]="medication" type="radio" name="meds" id="YES" value="YES">Yes
-                        </label>
-                    </div>
-                    <div class="col-sm-4">
-                        <label class="radio-inline">
-                            <input [(ngModel)]="medication" type="radio" name="meds" id="NO" value="NO">No
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <div>
-            <label for="oldMeds" class="col-sm-4 control-label">List Them Here*</label>
-            <div class="col-sm-9">
-                <textarea [(ngModel)]="registerInfo.medications" type="text" id="weight" placeholder="Enter Your Medications or any Old Disease Traits(If None then leave this column empty)"
-                    class="form-control"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-9 col-sm-offset-3">
-                <span class="help-block">*Required fields</span>
-            </div>
-        </div>
-        <button type="submit" (click) = "registerUser()" class="btn btn-primary btn-block">Register</button>
     </div>
-</div>
 </body>

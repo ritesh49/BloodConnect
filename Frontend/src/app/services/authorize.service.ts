@@ -11,9 +11,12 @@ export class AuthorizeService {
   // djangoUrl = 'https://ritesh49.pythonanywhere.com/';
   // private djangoUrl = 'http://localhost:8000/';
   private djangoUrl = 'https://blood-connect-major.herokuapp.com/';
-  loginUrl = 'api/token';
-  regURL = 'api/register';
-  signUpUrl = 'api/sign-up';
+  private loginUrl = 'api/token';
+  private regURL = 'api/register/';
+  private signUpUrl = 'api/sign-up';
+  private logoutUrl = 'api/logout/';
+  private refresh_verify_token = 'api/key_refresh/';
+  private check_username_url = 'api/create/account'
 
   validateUser(username:string, password:string):Observable<any>
   {    
@@ -28,11 +31,60 @@ export class AuthorizeService {
 
   SignUpUSer(regObj:object):Observable<any>
   {
-    return this.http.post<any>(this.djangoUrl+this.signUpUrl,regObj).pipe();
+    let httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.cookie ? document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('csrftoken'))
+            .split('=')[1] : 'undefined'          
+      })
+    }
+    return this.http.post<any>(this.djangoUrl+this.signUpUrl,regObj,httpHeaders).pipe();
   }
 
   registerUser(userInfo:object):Observable<any>
   {
-    return this.http.put<any>(this.djangoUrl+this.regURL,userInfo);
+    let httpHeaders = {
+      headers: new HttpHeaders({
+        'X-CSRFToken': document.cookie ? document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('csrftoken'))
+            .split('=')[1] : 'undefined',
+        'Content-type':'application/json'
+      })
+    }
+    return this.http.put<any>(this.djangoUrl+this.regURL,userInfo,httpHeaders);
+  }
+
+  checkUsername(username:string) {
+    let httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-type':'application/json'
+      })
+    }
+    return this.http.get(this.djangoUrl+this.check_username_url+'/'+ username+'/',httpHeaders)
+  }
+
+  resendVerificationToken(username:string) {    
+    let httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.cookie ? document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('csrftoken'))
+            .split('=')[1] : 'undefined'          
+      })
+    }
+    return this.http.put(this.djangoUrl+this.refresh_verify_token+username+'/',{'detail':'trial'},httpHeaders).pipe();
+  }
+
+  logOutUser() {
+    let httpHeaders = {
+      headers:new HttpHeaders({
+        'Authorization': localStorage ? localStorage.getItem("TokenInfo") ? 'Bearer ' + JSON.parse(localStorage.getItem("TokenInfo")).access : 'localstorage.getItem("TokenInfo") Undefined' : 'localstorage undefined'
+      })
+    }
+    return this.http.delete(this.djangoUrl+this.logoutUrl,httpHeaders).pipe();
   }
 }

@@ -25,6 +25,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  checkLocal():boolean{    
+    if(localStorage.getItem('UserData'))
+      return true;
+    else
+      return false;
+  }
+  
   contactUs(){
     if(Object.keys(this.contactInfo).length == 4)
     {

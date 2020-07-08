@@ -5,7 +5,7 @@
 	<div class="container-login100">
 		<div class="wrap-login100">
 			<div aTilt class="login100-pic js-tilt">
-				<img class="tilt-img" src="static/front_end/assets/LoginImage/bloodApp.png" alt="IMG">
+				<img class="tilt-img" src="/assets/LoginImage/bloodApp.png" alt="IMG">
 			</div>
 
 			<div class="form-group">
@@ -14,7 +14,7 @@
 				</span>
 
 				<div class="wrap-input100 validate-input">
-					<input class="input100" [(ngModel)]="username" type="text" name="email" placeholder="Username">
+					<input oninput="this.value = this.value.toLowerCase()" class="input100" [(ngModel)]="username" type="text" name="email" placeholder="Username">
 					<span class="focus-input100"></span>
 					<span class="symbol-input100">
 						<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -29,16 +29,22 @@
 					</span>
 				</div>
 
-				<div class="container-login100-form-btn">
+				<div *ngIf = "verified == 0" class="container-login100-form-btn">
 					<button (click)="loginUser()" class="login100-form-btn">
 						Login
 					</button>
 				</div>
 
-				<div class="container-login100-form-btn">
+				<div *ngIf ="verified == 0" class="container-login100-form-btn">
 					<button [routerLink]="['/register']" routerLinkActive="router-link-active"
 						class="login100-form-btn">
 						Register
+					</button>
+				</div>
+
+				<div *ngIf="verified == 1" class="container-login100-form-btn">
+					<button (click)="resendVerification()" class="login100-form-btn">
+						Resend Verification Link
 					</button>
 				</div>
 

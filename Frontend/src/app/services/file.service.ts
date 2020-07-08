@@ -26,14 +26,13 @@ export class FileService {
   {
       let httpHeaders = {
           headers: new HttpHeaders({
-            'X-CSRFToken': document.cookie
+            'X-CSRFToken': document.cookie ? document.cookie
             .split('; ')
             .find((row) => row.startsWith('csrftoken'))
-            .split('=')[1],
-            'Content-type':'application/json'
+            .split('=')[1] : 'undefined'
           })
       }
-      return this.http.post(this.djangoUrl+this.file_upload_download_url+userId as string,file).pipe()
+      return this.http.post(this.djangoUrl+this.file_upload_download_url+userId as string+'/',file,httpHeaders).pipe()
   }
   
 }
