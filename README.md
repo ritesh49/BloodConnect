@@ -1,8 +1,53 @@
-<h1>Blood Connect<h1>
-It is a website in which Donor and Receiver can directly Connect with Each other through my website. There is a Chat functionality also included in this website through which the Donor and Receiver can directly interact with other , share Current location, Share images ,Do video Calling and even call through my website.
-<h2>Technologies Used<h2>
-Frontend:- Angular 8
-Backend:- Django 2.2
-Database: PostgreSQL 12.3\n
-This was a major Project through which i wanted to do expertise in languages like Angular , Dajngo and database(SQL). I need to add that chat and Video calling functionality over there.\n
-Any bug fixing are welcome.
+# Blood Connect
+
+This is a project based on the blood donation in which donor and receiver can interact with each other through my [website](https://blood-connect-major.herokuapp.com)
+
+It is a [Website](https://blood-connect-major.herokuapp.com) in which the donor and receiver directly interacts through my website ,and they can chat , share location, Video Call and audio call through my website.
+
+## DEPLOYED LINK
+[https://blood-connect-major.herokuapp.com](https://blood-connect-major.herokuapp.com)
+
+## Technologies Used
+**Frontend**:- Angular 8
+**Backend**:- Django 2.2, Channels 2.4.0
+**Database**: PostgreSQL 12.3
+
+## Prerequisites
+
+- Node JS installed
+- Channels 2.4.0 installed
+
+## How to run App
+For running project first you need to make a virtual environment for Django.
+
+#### Setting Virtual Environment
+> virtualenv <v_name>
+> cd <v_name>/Scripts/activate
+> pip install -r requirements.txt
+
+#### Doing Django Configuration
+Fill your own Gmail Id Pass here from which you want to send mail.
+> EMAIL_HOST_USER = '<YOUR_EMAIL>'
+> EMAIL_HOST_PASSWORD = '<YOUR_EMAIL_PASSWORD>'
+
+If using Redis as Channel Layer so also install channels_redis
+and for Redis Channel Layer Configuration put the following code in Backend/BloodConnect/settings.py
+> CHANNEL_LAYERS = {
+>    "default": {
+>        "BACKEND": "channels_redis.core.RedisChannelLayer",
+>        "CONFIG": {
+>            "hosts": [("127.0.0.1", 6379)],
+>        },
+>    },
+> }
+
+After the Virtual environment is running start Django server by
+> python manage.py runserver
+
+#### Running Angular Code.
+> npm i -- for installing all dependencies
+> ng serve
+
+I have deployed this project in heroku and for deploying the ASGI Django Server you need to do some configurations , so you can see the Procfile through which you can get an idea of how to run ASGI Server in Production.
+
+Any bug fixes are welcome.
