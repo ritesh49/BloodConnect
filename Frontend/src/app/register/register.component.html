@@ -120,14 +120,14 @@
                                             <small *ngIf="height.errors?.required" class="text-danger">Height Required</small>
                                         </div>
                                         <input matInput formControlName="height" class="input--style-3" type="number"
-                                            placeholder="Height (in centimeter)">
+                                            placeholder="Height (in cm)">
                                     </div>
                                     <div class="col-sm-5 input-group  rightTags">
                                         <div *ngIf="(weight.invalid && weight.touched) || weight.dirty">
                                             <small *ngIf="weight.errors?.required" class="text-danger">Weight Required</small>
                                         </div>
                                         <input matInput formControlName="weight" class="input--style-3" type="number"
-                                            placeholder="Weight (in centimeter)">
+                                            placeholder="Weight (in kg)">
                                     </div>
                                 </div>
                                 <div class="input-group">                                    

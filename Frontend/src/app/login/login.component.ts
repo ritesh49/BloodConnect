@@ -30,8 +30,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  resetUsernamePass () {
-    this.toaster.showInfo('This Feature will be added in future versions');
+  forgot_password() {
+    this.toaster.showInfo('This Feature will be implemented in later versions');
   }
 
   resendVerification() {    
@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
-    if(this.username != '' && this.password != '')
+    let emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+    if(this.username != '' && this.password != '' && !emailRegex.test(this.username))
     {
       this.authorization.validateUser(this.username, this.password).subscribe(
         (tokenInfo) => {        
@@ -66,6 +67,6 @@ export class LoginComponent implements OnInit {
       );
       }
       else
-      this.toaster.showWarning('Fill up Username And password')
+      this.toaster.showWarning('Fill up Username And Password properly, Username Cannot be E-mail')
   }
 }

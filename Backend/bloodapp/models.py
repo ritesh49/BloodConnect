@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django_resized import ResizedImageField
 from .storage import OverwriteStorage
 
 class UserInfoModel(models.Model):
     image_width = models.PositiveIntegerField(default=300);
     image_height = models.PositiveIntegerField(default=300);
-    profile_image = models.ImageField(upload_to='profile_photo',blank=True , width_field='image_width', height_field='image_height', default='profile_photo/profile_image.jpg' ,storage = OverwriteStorage(),max_length=100)
+    profile_image = ResizedImageField(size=[200, 200],crop=['middle', 'center'],upload_to='profile_photo',blank=True , width_field='image_width', height_field='image_height', default='profile_photo/profile_image.jpg' ,storage = OverwriteStorage(),max_length=100)
     email = models.EmailField(default='')
     username = models.CharField(default='', max_length=50)
     blood_dr = models.CharField(default='', max_length=10)
@@ -17,7 +18,7 @@ class UserInfoModel(models.Model):
     birth_date = models.DateField(default='2020-04-29')
     height = models.IntegerField(default=0)
     weight = models.IntegerField(default=0)
-    phone_no = models.IntegerField(default=0)
+    phone_no = models.BigIntegerField(default=0)
     gender = models.CharField(default='', max_length=8)
 
     def save(self,*args,**kargs):
@@ -66,7 +67,8 @@ class ChatMessage(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User,related_name = 'profile' ,on_delete=models.CASCADE)
-    activation_key = models.CharField(max_length = 256)
+    activation_key = models.CharField(max_length = 256,blank = True)
+    verification_key = models.CharField(max_length=256, blank = True)
     key_expires = models.DateTimeField()
 
     def __str__(self):

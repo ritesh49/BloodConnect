@@ -19,8 +19,8 @@
                                 <p *ngIf="this.showMessages">{{this.showMessages.length}} Messages</p>
                             </div>
                             <div style="display:flex" class="video_cam">
-                                <span><i class="fas fa-video"></i></span>
-                                <span><i class="fa fa-phone"></i></span>
+                                <!-- <span><i class="fas fa-video"></i></span>
+                                <span><i class="fa fa-phone"></i></span> -->
                             </div>
                         </div>
                         <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
@@ -41,7 +41,7 @@
                                     <span class="msg_time_send">{{chat.date_sent}}</span>
                                 </div>
                                 <div class="img_cont_msg">
-                                    <img src="/assets/images/p2.png" class="rounded-circle user_img_msg">
+                                    <img src="/static/front_end/assets/images/p2.png" class="rounded-circle user_img_msg">
                                 </div>
                             </div>
                             <div *ngIf="chat.from_user == this.room_name" class="d-flex justify-content-start mb-4">
@@ -59,7 +59,7 @@
                     <div class="card-footer">
                         <div class="input-group">
                             <div class="input-group-append">
-                                <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+                                <!-- <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span> -->
                             </div>
                             <textarea (keyup.enter)="submitMessage()" [(ngModel)]="message" name="message"
                                 class="form-control type_msg" placeholder="Type your message..."></textarea>

@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 export class AuthorizeService {
 
   constructor(private http:HttpClient) { }
-  // djangoUrl = 'https://ritesh49.pythonanywhere.com/';
   // private djangoUrl = 'http://localhost:8000/';
   private djangoUrl = 'https://blood-connect-major.herokuapp.com/';
   private loginUrl = 'api/token';

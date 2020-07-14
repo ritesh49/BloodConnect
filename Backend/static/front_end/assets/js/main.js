@@ -6,7 +6,7 @@
         var wow = new WOW(
             {
                 animateClass: 'animated',
-                offset: 60
+                offset: 30
             }
         );
         wow.init();

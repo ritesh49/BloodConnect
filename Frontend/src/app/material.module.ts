@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog'
+import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -31,7 +32,8 @@ const modules = [
   MatPaginatorModule,
   BrowserAnimationsModule,
   MatExpansionModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTabsModule
 ];
 
 @NgModule({

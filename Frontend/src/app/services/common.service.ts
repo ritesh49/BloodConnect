@@ -14,7 +14,6 @@ export class CommonService {
   public loggedUser;
   public username:string;
   public authToken = {access:'',refresh:''}
-  // private djangoURL = 'https://ritesh49.pythonanywhere.com'
   // private djangoURL = 'http://localhost:8000';
   private djangoURL = 'https://blood-connect-major.herokuapp.com';
   private loadDataUrl = '/api/get_data/';

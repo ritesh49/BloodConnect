@@ -1,61 +1,37 @@
 <app-nav-bar></app-nav-bar>
-<div class="container">
-    <div style="justify-content: center;" class="row">
-        <div *ngFor="let user of dr_data" class="kt-portlet__body">
-            <div class="container">
-                <!-- Profile Card - START -->
-                <div class="container wrap">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-md-offset-3">
-                            <div class="well well-sm">
-                                <div class="row">
-                                    <div class="col-sm-9 col-md-6 col-lg-7">
-                                        <img src="/assets/images/profile_image.png"
-                                            style="height: 214px; width: inherit;" alt=""
-                                            class="img-rounded img-responsive" />
-                                        <button (click)="chatUser(user.username,user.first_name,user)">Send Message</button>
-                                        <div style="display:none" class="imgInfo">
-                                            <b>Weight: </b>{{user.weight}}<br>
-                                            <b>Gender: </b>{{user.gender}}<br>
-                                            <b>Height: </b>{{user.height}}<br>
-                                            <b>Blood Group: </b>{{user.bloodGroup}}<br>
-                                            <b>Medications: </b>{{user.medications}}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-9 col-md-6 col-lg-5">
-                                        <h4>{{user.first_name}} {{user.last_name}}</h4>
-                                        <small><cite title="San Diego, USA">San Diego, USA <i
-                                                    class="fa fa-map-marker"></i></cite></small>
-                                        <p>
-                                            <i class="fa fa-envelope"></i> {{user.email}}
-                                            <!-- <br />
-                                            <i class="fa fa-mobile"></i> {{user.phone_no}} -->
-                                            <br />
-                                            <i class="fa fa-gift"></i> {{user.birth_date}} <br>
-                                            <span class="moreInfo">
-                                                <b>Weight: </b>{{user.weight}}
-                                                <b>Gender: </b>{{user.gender}}
-                                                <b>Height: </b>{{user.height}}
-                                                <b>Blood Group: </b>{{user.bloodGroup}}<br>
-                                                <b>Medications: </b>{{user.medications}}
-                                            </span>
-                                        </p>
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-primary"><span
-                                                    class="fa fa-2x fa-facebook"></span></a>
-                                            <a href="#" class="btn btn-danger"><span
-                                                    class="fa fa-2x fa-google"></span></a>
-                                            <a href="#" class="btn btn-info"><span
-                                                    class="fa fa-2x fa-twitter"></span></a>
-                                            <a href="#" class="btn btn-primary"><span
-                                                    class="fa fa-2x fa-linkedin"></span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"> </script>
+<div class="row">
+    <div class="col-sm-4 col-md-5 col-xs-2 col-lg-3" *ngFor="let user of dr_data">
+        <!-- <input id="slider" class="customSlider" type="checkbox"> -->
+        <!-- <label for="slider"></label> -->
+
+        <div class="wrapper">
+            <div class="top-icons">                
             </div>
+
+            <div class="profile">
+                <img [src]="get_profile_photo(user.id)"
+                    class="thumbnail">
+                <!-- <div class="check"><i class="fas fa-check"></i></div> -->
+                <h3 class="name">{{user.first_name}} {{user.last_name}}</h3>
+                <p class="title"><cite title="San Diego, USA">San Diego, USA <i class="fa fa-map-marker"></i></cite></p>
+                <!-- <mat-tab-group>
+                    <mat-tab label="Weight">{{user.weight}} kg</mat-tab>
+                    <mat-tab label="Gender">{{user.gender}}</mat-tab>
+                    <mat-tab label="Height">{{user.height}} cm</mat-tab>
+                    <mat-tab label="Blood Group">{{user.bloodGroup}}</mat-tab>
+                    <mat-tab label="Medications">{{user.medications}}</mat-tab>
+                </mat-tab-group> -->
+                <b>Weight</b> {{user.weight}} kg<br>
+                <b>Gender</b> {{user.gender}}<br>
+                <b>Height</b> {{user.height}} cm<br>
+                <b>Blood Group</b> {{user.bloodGroup}}<br>
+                <b>Medications</b> {{user.medications}}
+                <button type="button" class="btn" mat-button mat-raised-button (click)="chatUser(user.username,user.first_name,user)">Send
+                    Message</button>
+            </div>           
         </div>
     </div>
+</div>

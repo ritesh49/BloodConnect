@@ -9,14 +9,15 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework_simplejwt import views as jwt_views,tokens
 from rest_framework import status
 from django.contrib.auth.models import User
-# TODO: use authenticate while user loggs in
 from django.contrib.auth import authenticate, logout
 from django.http import HttpResponse, HttpResponseNotFound, Http404,  HttpResponseRedirect, FileResponse
 from django.shortcuts import render, reverse
 from django.utils.encoding import smart_str
+from django.utils.html import strip_tags
 from django.utils import timezone
 from django.conf import settings
 from django.core.mail import send_mail, EmailMessage
+from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from datetime import datetime, timedelta
 import _sha512
@@ -43,6 +44,20 @@ Greetings from BloodConnect,
 Keep Donating Blood :)
 '''
 
+verification_mail = '''
+Hello {name},
+
+{link}
+Click on the above link to Verify that it was you who posted the request of change password.
+
+If it was not you then you can Contact Support in https://blood-connect-major.herokuapp.com/home
+
+Thanks for using BloodConnect
+Keep Donating Blood :)
+'''
+def strip_spaces_from_data(obj):
+    for i in obj:
+        obj[i] = obj[i].strip()
 
 def redirectView(request):
     return HttpResponseRedirect(reverse('homeUrl'))
@@ -51,21 +66,63 @@ def redirectView(request):
 def index(request):
     return render(request, 'index.html')
 
+@api_view(['GET'])
+def send_trial_mail(request):
+    html_message = render_to_string('mail_templates/trial.html')
+    plain_message = strip_tags(html_message)
+    send_mail('TESTING SUBJECT',plain_message,'faqritesh@gmail.com',['riteshramchandani123@gmail.com',],html_message=html_message)
+    return Response({'success':'Mail Sent'})
+
 @api_view(['POST'])
-def getToken(request):    
+def getToken(request):
     # data = dict(request.body
     user = authenticate(**request.data)
     if user:
         refresh = tokens.RefreshToken.for_user(user)
-        return Response({'refresh':str(refresh),'access':str(refresh.access_token)})            
+        return Response({'refresh':str(refresh),'access':str(refresh.access_token)})
     else:
         user = User.objects.filter(username=request.data['username'])
         if user and not user[0].is_active:
             return Response({'error':'Account Not Activated, Use Verification link to verify your account'},status=status.HTTP_406_NOT_ACCEPTABLE)
         return Response({'error':'No Active Found with Given Credentials'},status=status.HTTP_401_UNAUTHORIZED)
 
+@api_view(['GET'])
+def download_resume(request):    
+    image_path = settings.MEDIA_ROOT + '\\' + 'resume\\ritesh_resume.pdf'
+    try:
+        with open(image_path, 'rb') as image_upload:
+            image_data = image_upload.read()
+        response = HttpResponse(image_data, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename=ritesh_resume.pdf'
+        response['X-Sendfile'] = smart_str(image_path)
+    except IOError:
+        response = Response({'error': 'File Does Not Exists'},
+                            status=status.HTTP_204_NO_CONTENT)
+    return response
+
+class VerificationView(APIView):
+    def put(self,request):
+        '''
+        * request.data => {username:'',email:''}
+        * first check whether user exists or not and if it exists , is user active
+        * if not active then show the user the verification column
+        * store the verification in Profile Model and when the user clicks the link on mail then see
+        '''
+        username = request.data.username
+        email = request.data.email
+        user_data =  User.objects.get(username = username)
+        if user_data.is_active:
+            key = generate_activation_key(username)
+            name = str(user_data.first_name)
+            url = 'blood-connect-major.herokuapp.com'
+            url = 'localhost:4200'
+            link = 'https://{url}/login/verify/{key}'.format(url = url,key=key)
+            send_mail('BloodConnect - Verification Link for Forgot Password')
+                
+
 class SignUpView(APIView):
     def post(self, request):
+        strip_spaces_from_data(request.data)
         serializer = SignUpSerializer(data=request.data)
         if serializer.is_valid():
             user = User.objects.create_user(**request.data, is_active=False)
@@ -167,18 +224,19 @@ class FileView(APIView):
     def get(self, request, id):   # For downloading image according to UserId
         data = UserInfoModel.objects.get(pk=id)
         image_url = str(data.profile_image)
-        image_path = settings.MEDIA_ROOT + '\\' + image_url.replace('/', '\\')
+        image_path = '\\app\\media' + '\\' + image_url.replace('/', '\\')
         print(image_path)
         try:
             with open(image_path, 'rb') as image_upload:
-                image_data = image_upload.read()
-            response = HttpResponse(image_data, content_type='image/png')
-            response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(
-                image_url.split('/')[-1])
-            response['X-Sendfile'] = smart_str(image_path)
+                image_data = image_upload.read()        
         except IOError:
-            response = Response({'error': 'File Does Not Exists'},
-                                status=status.HTTP_204_NO_CONTENT)
+            image_path = '\\app\\media' + '\\' + 'profile_photo\\profile_image.jpg'
+            with open(image_path, 'rb') as image_upload:
+                image_data = image_upload.read()
+        response = HttpResponse(image_data, content_type='image/png')
+        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(
+            image_url.split('/')[-1])
+        response['X-Sendfile'] = smart_str(image_path)                        
         return response
 
 

@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
   public signUpInfo = new SignUp();
   @ViewChild('stepper', { static: true }) private myStepper: MatStepper;
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-  profile_img = '/assets/images/default_image.jpg';
+  profile_img = '/static/front_end/assets/images/default_image.jpg';
   selectedFile: File;
   verify: boolean;
   value: string;
@@ -212,9 +212,9 @@ export class RegisterComponent implements OnInit {
 
   registerUser() {    
     if (this.PersonalDetailFormGroup.valid) {
-      this.createAccount();
-      this.CreateAccountFormGroup.value
+      this.createAccount();      
       this.registerInfo = {...this.CreateAccountFormGroup.value,...this.PersonalDetailFormGroup.value,blood_dr:'donor'}
+      this.registerInfo['phone_no'] = JSON.stringify(this.registerInfo['phone_no']);
       this.authorize.registerUser(this.registerInfo).subscribe(
         (data) => {
           if(this.selectedFile)

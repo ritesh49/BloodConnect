@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserInfo } from '../entities/UserInfo';
 import { CommonService } from '../services/common.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,11 +17,11 @@ export class DrComponent implements OnInit {
     private toaster:ToasterComponent
     ) { }
 
-  dr_data: UserInfo[];
+  // dr_data: UserInfo[];
+  dr_data;
   dr_info:string;  
 
-  ngOnInit(): void {
-    this.toaster.showInfo('This Screen will be improved in Later Versions')
+  ngOnInit(): void {    
     this.dr_info = this.route.snapshot.paramMap.get("name");
     this.common.loadData(this.dr_info)
     .subscribe(data => {
@@ -31,6 +31,11 @@ export class DrComponent implements OnInit {
       else
         this.dr_data = data
     },err => console.log(err.status))
+  }
+
+  get_profile_photo(id){
+    return `http://blood-connect-major.herokuapp.com/api/file/${id}/`;
+    // return `http://localhost:8000/api/file/${id}/`;
   }
 
   chatUser(username:string,first_name:string,to_user_data) {
