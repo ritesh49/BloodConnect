@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private common: CommonService,
     private _formBuilder: FormBuilder,
-    private fileservice:FileService
+    private fileservice: FileService
   ) {}
 
   ngOnInit() {
@@ -125,7 +125,7 @@ export class RegisterComponent implements OnInit {
     return this.CreateAccountFormGroup.get('email');
   }
 
-  checkProperties(obj, exceptions: string[], properties: string[]) {    
+  checkProperties(obj, exceptions: string[], properties: string[]) {
     for (var key in properties) {
       if (!exceptions.includes(key) && (obj[key] || obj[key] == ''))
         return false;
@@ -174,14 +174,13 @@ export class RegisterComponent implements OnInit {
       );
   }
 
-  uploadImage(userId:number) {
+  uploadImage(userId: number) {
     let image_data = new FormData();
-    image_data.append('file',this.selectedFile);
-    this.fileservice.uploadFile(image_data,userId)
-    .subscribe(data => {
-      if(data['success'])
-        this.toaster.showSuccess('Profile Picture Succesfully Changed')
-    })
+    image_data.append('file', this.selectedFile);
+    this.fileservice.uploadFile(image_data, userId).subscribe((data) => {
+      if (data['success'])
+        this.toaster.showSuccess('Profile Picture Succesfully Changed');
+    });
   }
 
   createAccount() {
@@ -204,21 +203,31 @@ export class RegisterComponent implements OnInit {
           //     } else this.toaster.showError(field + ':-' + err.error[field][j]);
           //   }
           // }
-          this.toaster.showError('Error Occured , Drop a message in Contact Us');
-        }        
+          this.toaster.showError(
+            'Error Occured , Drop a message in Contact Us'
+          );
+        }
       );
-    } else this.toaster.showWarning('Fill All Fields with Valid Values for Creating Account');
+    } else
+      this.toaster.showWarning(
+        'Fill All Fields with Valid Values for Creating Account'
+      );
   }
 
-  registerUser() {    
+  registerUser() {
     if (this.PersonalDetailFormGroup.valid) {
-      this.createAccount();      
-      this.registerInfo = {...this.CreateAccountFormGroup.value,...this.PersonalDetailFormGroup.value,blood_dr:'donor'}
-      this.registerInfo['phone_no'] = JSON.stringify(this.registerInfo['phone_no']);
+      this.createAccount();
+      this.registerInfo = {
+        ...this.CreateAccountFormGroup.value,
+        ...this.PersonalDetailFormGroup.value,
+        blood_dr: 'donor',
+      };
+      this.registerInfo['phone_no'] = JSON.stringify(
+        this.registerInfo['phone_no']
+      );
       this.authorize.registerUser(this.registerInfo).subscribe(
         (data) => {
-          if(this.selectedFile)
-            this.uploadImage(data.id)
+          if (this.selectedFile) this.uploadImage(data.id);
           console.log(data);
         },
         (err) => console.log(err),
