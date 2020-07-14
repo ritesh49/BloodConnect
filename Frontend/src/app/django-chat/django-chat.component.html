@@ -2,7 +2,7 @@
 
 <body>
     <div class="container-fluid h-100">
-        <div class="row justify-content-center h-100">            
+        <div class="row justify-content-center h-100">
             <div class="col-md-8 col-xl-6 chat">
                 <div class="card">
                     <div class="card-header msg_head">
@@ -10,9 +10,7 @@
                             <div class="img_cont">
                                 <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
                                     class="rounded-circle user_img">
-                                <span
-                                    *ngIf="this.online_users && this.isOnline"
-                                    class="online_icon"></span>
+                                <span *ngIf="this.online_users && this.isOnline" class="online_icon"></span>
                             </div>
                             <div class="user_info">
                                 <span>{{this.to_user_data.first_name}} {{this.to_user_data.last_name}}</span>
@@ -41,7 +39,8 @@
                                     <span class="msg_time_send">{{chat.date_sent}}</span>
                                 </div>
                                 <div class="img_cont_msg">
-                                    <img src="/static/front_end/assets/images/p2.png" class="rounded-circle user_img_msg">
+                                    <img src="/static/front_end/assets/images/p2.png"
+                                        class="rounded-circle user_img_msg">
                                 </div>
                             </div>
                             <div *ngIf="chat.from_user == this.room_name" class="d-flex justify-content-start mb-4">

@@ -13,29 +13,32 @@ export class AboutComponent implements OnInit {
 
   ngOnInit(): void {}
   downloadResume() {
-    saveAs('static/front_end/assets/resume/ritesh_resume.pdf','Ritesh_IT_July2020')
+    saveAs(
+      'static/front_end/assets/resume/ritesh_resume.pdf',
+      'Ritesh_IT_July2020'
+    );
     //   let httpHeaders = {
-  //     headers:new HttpHeaders({
-        
-  //     })
-  //   }
-  //   httpHeaders["responseType"] = "blob";
-  //   var reader = new FileReader();
-  //   this.http
-  //     // .get<any>('http://localhost:8000/api/download/resume/', {
-  //     .get<Blob>('/assets/resume/ritesh_resume.pdf', httpHeaders)
-  //     .subscribe(
-  //       (res) => {
-  //         // let url = URL.createObjectURL(res);
-  //         // reader.readAsDataURL(res);
-  //         // reader.onloadend = function (e) {
-  //         //   window.open(url);
-  //         // };          
-  //         saveAs('Ritesh_IT_July2020.pdf',res);
-  //       },
-  //       (error) => console.log('Error downloading the file.'),
-  //       () => console.log('Completed file download.')
-  //     );
+    //     headers:new HttpHeaders({
+
+    //     })
+    //   }
+    //   httpHeaders["responseType"] = "blob";
+    //   var reader = new FileReader();
+    //   this.http
+    //     // .get<any>('http://localhost:8000/api/download/resume/', {
+    //     .get<Blob>('/assets/resume/ritesh_resume.pdf', httpHeaders)
+    //     .subscribe(
+    //       (res) => {
+    //         // let url = URL.createObjectURL(res);
+    //         // reader.readAsDataURL(res);
+    //         // reader.onloadend = function (e) {
+    //         //   window.open(url);
+    //         // };
+    //         saveAs('Ritesh_IT_July2020.pdf',res);
+    //       },
+    //       (error) => console.log('Error downloading the file.'),
+    //       () => console.log('Completed file download.')
+    //     );
 
     // reader.onloadend = function (e) {
     //     window.open(escape(reader.result as string));
