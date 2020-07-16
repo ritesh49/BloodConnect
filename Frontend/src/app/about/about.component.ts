@@ -14,7 +14,7 @@ export class AboutComponent implements OnInit {
   ngOnInit(): void {}
   downloadResume() {
     saveAs(
-      'static/front_end/assets/resume/ritesh_resume.pdf',
+      'assets/resume/ritesh_resume.pdf',
       'Ritesh_IT_July2020'
     );
     //   let httpHeaders = {

@@ -8,8 +8,8 @@ import { ChatMessage } from '../entities/ChatMessage';
 })
 export class ChatService {
   constructor(private http: HttpClient) {}
-  // private djangoUrl = 'http://localhost:8000/';
-  private djangoUrl = 'https://blood-connect-major.herokuapp.com/';
+  private djangoUrl = 'http://localhost:8000/';
+  // private djangoUrl = 'https://blood-connect-major.herokuapp.com/';
   private chat_messages_url = 'api/chat/get_chat_messages/';
   private get_online_users = 'api/chat/get_online_users/';
 

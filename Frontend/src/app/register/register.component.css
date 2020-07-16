@@ -621,7 +621,7 @@ select option {
 }
 
 .card-3 .card-heading {
-  background: url("/static/front_end/assets/images/heading.gif") top left/cover no-repeat;
+  background: url("/assets/images/heading.gif") top left/cover no-repeat;
   display: table-cell;
   width: 50%;
 }

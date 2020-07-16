@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
   public signUpInfo = new SignUp();
   @ViewChild('stepper', { static: true }) private myStepper: MatStepper;
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-  profile_img = '/static/front_end/assets/images/default_image.jpg';
+  profile_img = '/assets/images/default_image.jpg';
   selectedFile: File;
   verify: boolean;
   value: string;
