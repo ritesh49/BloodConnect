@@ -20,7 +20,7 @@ Django==2.2
 django-resized==0.3.6
 django-cors-headers==3.2.1
 django-smtp-ssl==1.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 djangorestframework-simplejwt==4.4.0
 hiredis==1.0.1
